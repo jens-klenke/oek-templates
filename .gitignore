@@ -4,3 +4,5 @@
 *.pdf
 Abschlussarbeit.tex
 .Rhistory
+.Rproj.user
+.Rproj
