@@ -10,6 +10,7 @@ supervisor: "Prof. Dr. Christoph Hanck"
 secondsupervisor: "Prof. Dr. Andreas Behr"
 ssemester: "1"
 estdegree_emester: "Summer Term 2019"
+abstract: "Der Abstract wird direkt im YAML Header geschrieben."
 deadline: "Deadline"
 output:
   pdf_document:
