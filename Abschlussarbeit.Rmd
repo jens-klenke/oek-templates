@@ -35,7 +35,7 @@ language: german
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      cache = TRUE)
+                      cache = FALSE)
 options(digits = 7) # default of R
 ```
 

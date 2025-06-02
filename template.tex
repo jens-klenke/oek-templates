@@ -219,6 +219,17 @@ $else$
 \usepackage[english]{babel}
 $endif$
 
+\makeatletter
+\providecommand{\pandocbounded}[1]{%
+  \begin{minipage}[t]{\linewidth}%
+    \def\maxwidth{\linewidth}%
+    \def\maxheight{\textheight}%
+    \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}%
+    #1%
+  \end{minipage}%
+}
+\makeatother
+
 \begin{document}
 
 \newgeometry{left=2cm,right=1cm,bottom=2cm,top=2cm}
