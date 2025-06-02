@@ -219,16 +219,19 @@ $else$
 \usepackage[english]{babel}
 $endif$
 
-\makeatletter
-\providecommand{\pandocbounded}[1]{%
-  \begin{minipage}[t]{\linewidth}%
-    \def\maxwidth{\linewidth}%
-    \def\maxheight{\textheight}%
-    \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}%
-    #1%
-  \end{minipage}%
-}
-\makeatother
+%\makeatletter
+%\providecommand{\pandocbounded}[1]{%
+%  \begin{minipage}[t]{\linewidth}%
+%    \def\maxwidth{\linewidth}%
+%    \def\maxheight{\textheight}%
+%    \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}%
+%    #1%
+%  \end{minipage}%
+%}
+%\makeatother
+
+% escape pandocbounded
+\newcommand{\pandocbounded}[1]{#1}
 
 \begin{document}
 
