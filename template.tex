@@ -39,10 +39,7 @@ $endif$
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 % use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
+
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
@@ -219,6 +216,10 @@ $else$
 \usepackage[english]{babel}
 $endif$
 
+\IfFileExists{microtype.sty}{%
+	\usepackage[nopatch=footnote]{microtype}
+	\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
 %\makeatletter
 %\providecommand{\pandocbounded}[1]{%
 %  \begin{minipage}[t]{\linewidth}%
