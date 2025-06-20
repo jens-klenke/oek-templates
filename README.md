@@ -18,7 +18,6 @@ quarto-slides/
 │  └─ slide-numbers.js
 ├─ _extensions/
 │  ├─ shafayetShafee/reveal-header
-├─ _quarto.yml            # project-wide options (optional)
 └─ README.md              # this file
 ```
 
