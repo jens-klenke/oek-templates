@@ -15,7 +15,7 @@ deadline: "Deadline"
 output:
   pdf_document:
     keep_tex: yes
-    template: template.tex
+    template: Resources/template.tex
     fig_caption: yes
     citation_package: biblatex
     number_sections: true

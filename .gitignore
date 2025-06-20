@@ -1,7 +1,7 @@
-**/Abschlussarbeit_files
+**/thesis_files
 *.log
 .DS_Store
-Abschlussarbeit.tex
+thesis.tex
 .Rhistory
 .Rproj.user
 .Rproj
