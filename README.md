@@ -43,5 +43,7 @@ quarto-slides/
 quarto --version   # should print something like 1.5.42
 
 ### 2 . Adding / Re-adding Extensions
-quarto add shafayetShafee/reveal-header     # header text/logo
-quarto add royfrancis/reveal-logo           # dual header logos
+```text
+quarto add shafayetShafee/reveal-header       # header text/logo
+quarto add royfrancis/reveal-logo             # dual header logos
+```
