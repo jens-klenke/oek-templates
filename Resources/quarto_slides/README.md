@@ -10,7 +10,7 @@ Everything is pre-configured so you can render with a single command, edit using
 
 ```text
 quarto-slides/
-├─ index.qmd               # main deck
+├─ index.qmd               # main file
 ├─ assets/
 │  ├─ clean.scss           # custom styles
 │  ├─ signet_ude_rgb.png   # footer logo
