@@ -28,7 +28,6 @@ quarto-slides/
 
 | Tool | Why you need it | Quick install |
 |------|-----------------|---------------|
-| **Git** | clone / commit / push | <https://git-scm.com> |
 | **Quarto CLI ≥ 1.4** | converts `.qmd` to HTML & PDF | <https://quarto.org/docs/download> |
 | **A TeX distribution**<br>(TinyTeX, MiKTeX, MacTeX) | *Only* if you render PDFs | `quarto install tinytex` |
 | **R ≥ 4.2** *(optional)* | run R code chunks inside slides | <https://cran.r-project.org> |
