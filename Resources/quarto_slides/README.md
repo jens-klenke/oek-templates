@@ -29,7 +29,6 @@ quarto-slides/
 |------|-----------------|---------------|
 | **Quarto CLI ≥ 1.4** | converts `.qmd` to HTML & PDF | <https://quarto.org/docs/download> |
 | **A TeX distribution**<br>(TinyTeX, MiKTeX, MacTeX) | *Only* if you render PDFs | `quarto install tinytex` |
-| **R ≥ 4.2** *(optional)* | run R code chunks inside slides | <https://cran.r-project.org> |
 
 > **Windows tip**&nbsp;— after installing software, **open a new PowerShell / CMD** so the new programs are on your `PATH`.
 
