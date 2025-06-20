@@ -40,8 +40,8 @@ quarto-slides/
 ### 1 · Check Quarto works
 quarto --version   # should print something like 1.5.42
 
-### 2 . Adding / Re-adding Extensions
-```text
+### 2 . Adding Extensions
+```text For e.g.,
+CMD
 quarto add shafayetShafee/reveal-header       # header text/logo
-quarto add royfrancis/reveal-logo             # dual header logos
 ```
