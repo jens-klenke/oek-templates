@@ -1,8 +1,6 @@
 # RMarkdown Template for Thesis and Seminar Papers of the Econometric Chair
 
-## Quarto package
-
-# Quarto Package Guide
+## Quarto Package 
 
 A ready-to-fork template for creating **presentation slides** (RevealJS, Beamer PDF, or PowerPoint) using [Quarto](https://quarto.org) with full **Git** support.  
 Everything is pre-configured so you can render with a single command, edit using plain Markdown, and optionally publish online via **GitHub Pages**.
@@ -10,7 +8,7 @@ Everything is pre-configured so you can render with a single command, edit using
 
 ---
 
-## 1 · Project Snapshot
+### 1 · Project Snapshot
 
 ```text
 quarto-slides/
@@ -26,7 +24,7 @@ quarto-slides/
 
 ---
 
-## 2 · Requirements
+### 2 · Requirements
 
 | Tool | Why you need it | Quick install |
 |------|-----------------|---------------|
@@ -37,12 +35,12 @@ quarto-slides/
 
 ---
 
-## 4 · Setup&nbsp;&nbsp;✧&nbsp;One-Time Only
+### 4 · Setup&nbsp;&nbsp;✧&nbsp;One-Time Only
 
-### 1 · Check Quarto works
+#### 1 · Check Quarto works
 quarto --version   # should print something like 1.5.42
 
-### 2 . Adding Extensions
+#### 2 . Adding Extensions
 ```text For e.g.,
 CMD
 quarto add shafayetShafee/reveal-header       # header text/logo
@@ -50,4 +48,5 @@ quarto add shafayetShafee/reveal-header       # header text/logo
 
 
 ## Xaringan package
+
 ## Latex for report
