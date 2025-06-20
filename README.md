@@ -18,7 +18,6 @@ quarto-slides/
 │  └─ slide-numbers.js
 ├─ _extensions/
 │  ├─ shafayetShafee/reveal-header
-│  └─ royfrancis/reveal-logo   # optional
 ├─ _quarto.yml            # project-wide options (optional)
 └─ README.md              # this file
 ```
@@ -39,15 +38,11 @@ quarto-slides/
 
 ---
 
-## 3 · Setup&nbsp;&nbsp;✧&nbsp;One-Time Only
+## 4 · Setup&nbsp;&nbsp;✧&nbsp;One-Time Only
 
-# 1 · Check Quarto works
+### 1 · Check Quarto works
 quarto --version   # should print something like 1.5.42
 
-# 3 · (Only if you need PDFs)
-quarto install tinytex   # installs TinyTeX locally
-
-# 4 . Adding / Re-adding Extensions
+### 2 . Adding / Re-adding Extensions
 quarto add shafayetShafee/reveal-header     # header text/logo
 quarto add royfrancis/reveal-logo           # dual header logos
-
