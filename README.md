@@ -1,31 +1,49 @@
-# Quarto Package Guide
+# RMarkdown Template for Thesis and Seminar Papers of the Econometric Chair
 
-A ready-to-fork template for creating **presentation slides** (RevealJS, Beamer PDF, or PowerPoint) using [Quarto](https://quarto.org) with full **Git** support.  
-Everything is pre-configured so you can render with a single command, edit using plain Markdown, and optionally publish online via **GitHub Pages**.
+## Requirements 
+- Install TinyTeX
+```
+install.packages(c("tinytex", "rmarkdown", "knitr")) 
+tinytex::install_tinytex()
+```
+- Alternative download MikTex from https://miktex.org/download
 
-
----
-
-## 1 · Project Snapshot
-
-```text
-quarto-slides/
-├─ index.qmd               # main file
-├─ assets/
-│  ├─ clean.scss           # custom styles
-│  ├─ signet_ude_rgb.png   # footer logo
-│  ├─ LogoUniDuE.jpg       # header logo
-│  └─ slide-numbers.js
-├─ _extensions/
-│  ├─ shafayetShafee/reveal-header
+- Required R Packages
+```
+install.packages(c("rmarkdown", "tinytex", "knitr"))
+tinytex::tlmgr_install(c(
+  "biblatex", "biber", "babel-english", "caption", "graphicx", "float",
+  "geometry", "anyfontsize", "tocloft", "listings", "xcolor", "hyperref",
+  "fancyhdr", "titling", "sectsty", "etoolbox"
+))
 ```
 
-### 1 · Check Quarto works
+- Install Quarto from (https://quarto.org/docs/get-started/), to check do the followng
+```bash
+quarto check 
 ```
-quarto --version   # should print something like 1.5.42
-```
-### 2 . Adding Extensions
+- For Quarto extension 
 ```
 In CMD
 quarto add shafayetShafee/reveal-header       # header text/logo
 ```
+
+- Install xaringan
+```
+install.packages("xaringan")
+```
+
+---
+
+## Project Snapshot
+``` 
+oek-templates
+     - includes
+     - oek-templates (Project file)
+     - Resources 
+           - thesis_paper
+           - quarto_slides
+           - xaringan_slides
+```
+
+
