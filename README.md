@@ -40,7 +40,7 @@ install.packages("xaringan")
 ``` 
 oek-templates
      - includes
-     - oek-templates (Project file)
+     - oek-templates.Rproj (Project file)
      - Resources 
            - thesis_paper
            - quarto_slides
