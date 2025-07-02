@@ -1,0 +1,172 @@
+---
+title: "SBCF-IV: "
+date: 2025-05-16
+author: 
+    - name: Jens Klenke
+      affiliations:
+        - ref: oek
+    - name: Lennard Maßmann
+      affiliations:
+        - ref: oek
+        - ref: rgs
+affiliations: 
+    - id: oek
+      name: University of Duisburg-Essen
+    - id: rgs
+      name: Ruhr Graduate School
+format: 
+    revealjs:
+        mathjax: "default"
+        embed-resources: true
+        footer: "RuhrMetrics Seminar"
+        logo: assets/signet_ude_rgb.png
+        header-logo: "assets/LogoUniDuE.jpg"   # ← NEW header logo
+        # header-logo-right-height: "2.5rem"
+        theme: [default, assets/clean.scss]
+        smaller: true
+        fig-format: svg
+        number-sections: True
+        toc: false
+        slide-number: false  # optional, to avoid double numbering
+        includes:
+          after-body: assets/slide-numbers.js
+        title-slide-attributes:
+          data-background-image: assets/duetower.png
+          data-background-size: 90rem auto
+          data-background-position: center 90% 
+bibliography: assets/references.bib
+csl: assets/apa.csl  # Optional: use a CSL file for citation style
+execute:
+  daemon: false
+highlight-style: github
+filters:
+  - reveal-header  
+---
+
+## Outline
+
+::: {.hidden}
+$$
+\newcommand{\A}{{\mathbb A}}
+$$
+:::
+
+::: {style="font-size: 150%;"}
+
+[{{< fa bars-staggered >}}]{style="color: #404040;"} &ensp; EfeMOD Project
+
+[{{< fa magnifying-glass >}}]{style="color: #404040;"} &ensp; Motivation and Objective
+
+[{{< fa table >}}]{style="color: #404040;"} &ensp; Data
+
+[{{< fa circle-nodes >}}]{style="color: #404040;"} &ensp; Empirical Approach
+
+[{{< fa lightbulb >}}]{style="color: #404040;"} &ensp; Results
+
+[{{< fa binoculars >}}]{style="color: #404040;"} &ensp; Conclusion / Outlook
+
+:::
+
+## EfeMOD
+
+**Empirisch fundierte Elektrizitätsmarkt-Modellierung mit Open Data**
+
+:::: {.columns}
+
+::: {.column width="65%"}
+
+[{{< fa users-gear >}}]{style="color: #404040;"} **Project Entities:**
+
+Chair of Prof. Dr. Christoph Weber (Management Sciences and Energy Economics)
+
+Chair of Prof. Dr. Florian Ziel (Data Science in Energy and Environment)
+
+[{{< fa bullseye >}}]{style="color: #404040;"} &ensp; **Project Goal:**
+
+Use publicly available data (particularly ENTSO-E Transparency Platform) to estimate parameters for energy system and energy market models.
+
+:::
+
+::: {.column width="5%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="30%"}
+<!-- ![](figures/BMWK.webp) -->
+
+:::
+
+::::
+
+## New Slide
+
+
+Hallo World!
+
+## EfeMOD
+
+<!-- ![](figures/power_plant_list.jpg) -->
+
+## Motivation and Objective
+
+**Identification of Power Plant Operation States Using Clustering**
+
+[{{< fa earth-europe >}}]{style="color: #404040;"} Gain Knowledge about the Power Plant Characteristics
+
+- Operation Points,
+- Efficiency
+- Capacity, etc.
+
+[{{< fa display >}}]{style="color: #404040;"} This Presentation: 
+
+Identify Operation States:
+
+- Stable Operation
+- Startup
+- Minimum-Stable Operation, etc.
+
+Provide these characteristics to other researchers
+
+[{{< fa right-long >}}]{style="color: #404040;"} e.g. to estimate efficiency
+
+
+## Prior Partitioning
+
+Model-Based Clustering of the Regions using `mclust::Mclust` in `R`.
+
+- <b style="color: #2D7D32FF;">Stable</b>: 2-5 Clusters
+- <b style="color: #FDD834FF;">Ramp Up</b>: 2-4 Clusters
+- <b style="color: #8D24AAFF;">Ramp Down</b>: 2-4 Clusters
+
+[{{< fa lightbulb >}}]{style="color:rgb(255, 166, 0);"} Obtain finite mixture distribution:
+
+$$\sum_{k=1}^{G}{\pi_k f_k (\mathbf{x}; \mathbf{\theta}_k)}$$
+
+$f_k$ Density of k's component<br>
+$\pi_k$ Mixture weights<br>
+$\theta_k$ parameters of k's density component
+
+## Try equations
+
+$$
+x =\sum_{i = 1}^{6} x_i \tag{1} \label{eq:einste}
+$$
+
+
+$$
+E = mc^2 \tag{2} \label{eq:eiein}
+$$
+
+
+And here we reference equation (\ref{eq:einste}) again.
+
+
+## Energy Policy
+
+According to recent studies, electricity markets are changing rapidly [@smith2020energy].
+
+
+## References
+
+::: {#refs}
+:::
