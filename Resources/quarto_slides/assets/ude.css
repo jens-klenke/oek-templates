@@ -290,7 +290,13 @@ slides > slide {
     flex: 1 1 auto;
 }
 
-
+/* Never let images or SVGs exceed 85 % of the slide height */
+.reveal .slide img,
+.reveal .slide svg {
+  max-height: 85vh;
+  height: auto;
+  width: auto;
+}
 
 /***********
  Changed CSS

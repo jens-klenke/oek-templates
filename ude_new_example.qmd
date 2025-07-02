@@ -1,0 +1,123 @@
+---
+title: "UDE Quarto Slide"
+subtitle: "A quick tour of Quarto"
+author: "Jens Klenke"
+date: today
+bibliography: Resources/quarto_slides/assets/references.bib         
+format:
+  revealjs:
+    min-scale: 0.5      
+    slide-number: true
+    toc: true                         # show a side table-of-contents
+    logo: Resources/quarto_slides/assets/signet_ude_rgb.png      # appears bottom-right
+    header-logo: "Resources/quarto_slides/assets/LogoUniDuE.jpg"   # header logo
+    incremental: False                 # bullets appear one-by-one
+    # theme: [default, Resources/quarto_slides/assets/clean.scss]
+    smaller: true
+    html-math-method: katex
+    title-slide-attributes:
+      data-background-image: Resources/quarto_slides/assets/duetower.png
+execute:
+  echo: true   
+filters:
+  - reveal-header     
+---
+
+
+
+
+## Introduction
+::: {.column width="30%"}
+![](Resources/quarto_slides/assets/quarto_image.png)
+:::
+**Welcome**
+
+- **Quarto** uses the same Markdown you already know  
+- R/Python/Julia chunks run *live* during render  
+- Export to HTML, PDF, PowerPoint from one source  
+
+::: notes
+Press **S** while presenting to open speaker notes.  
+These notes are written in a fenced block starting with `::: notes`.
+:::
+
+---
+
+**Bullets**
+
+- Item A  
+- Item B  
+- Item C  
+
+We can also set `incremental: true` in the YAML, each list item appears on click.
+
+
+## Columns and call-outs
+
+::: columns
+::: {.column width="50%"}
+::: {.callout-tip icon="lightbulb"}
+### Tip
+Quarto **call-outs** are the easiest way to highlight ideas.
+:::
+:::
+::: {.column width="50%"}
+::: {.callout-warning}
+### Caution
+2nd Example
+:::
+:::
+:::
+
+
+## Static plot 
+
+```{r}
+library(plotly)
+plot_ly(mtcars,
+        x     = ~mpg,
+        y     = ~hp,
+        color = ~factor(cyl),
+        type  = "scatter",
+        mode  = "markers",
+        width="40%",    # fill 80% of slide width
+        height="30vh"
+        )
+
+```
+
+## Interactive Graph 
+
+```{r}
+library(leaflet)
+
+leaflet(width  = "40%",    # 60% of slide width
+        height = "200px") |>
+  addTiles() |>
+  setView(lng = 7.0084, lat = 51.4640, zoom = 16) |>
+  addPopups(lng = 7.0084, lat = 51.4640,
+            popup = "Chair of Econometrics")
+```
+
+## Lets you run Python 
+
+
+```{r}
+# helper R code
+x <- rnorm(1e5)
+```
+
+```{python}
+
+import numpy as np
+r_x = np.array(r.x)          # r.x is the R vector
+r_x.mean()
+
+```
+
+Here’s a BibTeX entry you can drop into your references.bib to cite reference, in the same style [@Python3.11]
+
+## References
+
+::: {#refs}
+:::
