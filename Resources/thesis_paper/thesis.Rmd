@@ -145,17 +145,7 @@ You can cite a source like this: [@Keil_2012] or @Litterman1986.
 
 A cited source will be automatically added to the end of the document.
 
-\pagebreak
 
-
-
-## Errors and Warnings
-
-During compilation you may encounter warnings or errors related to missing references.  To resolve these, ensure that your bibliography file is correctly specified. For e.g., `biblio-files: Resources/references.bib`
-
-If you see warnings about a label being multiply defined, it often means that the function you used to create a figure or table has inserted two identical empty `label{}` commands. To fix this, give each table or figure a unique, meaningful label— for example, `label="summary"` . If you omit a label entirely, LaTeX will warn: `There were multiply-defined labels.`
-
-\pagebreak
 
 
 
