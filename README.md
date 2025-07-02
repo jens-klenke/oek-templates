@@ -20,26 +20,12 @@ quarto-slides/
 │  ├─ shafayetShafee/reveal-header
 ```
 
----
-
-## 2 · Requirements
-
-| Tool | Why you need it | Quick install |
-|------|-----------------|---------------|
-| **Quarto CLI ≥ 1.4** | converts `.qmd` to HTML & PDF | <https://quarto.org/docs/download> |
-| **A TeX distribution**<br>(TinyTeX, MiKTeX, MacTeX) | *Only* if you render PDFs | `quarto install tinytex` |
-
-> **Windows tip**&nbsp;— after installing software, **open a new PowerShell / CMD** so the new programs are on your `PATH`.
-
----
-
-## 4 · Setup&nbsp;&nbsp;✧&nbsp;One-Time Only
-
 ### 1 · Check Quarto works
+```
 quarto --version   # should print something like 1.5.42
-
+```
 ### 2 . Adding Extensions
-```text For e.g.,
-CMD
+```
+In CMD
 quarto add shafayetShafee/reveal-header       # header text/logo
 ```
