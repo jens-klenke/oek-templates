@@ -39,12 +39,17 @@ install.packages("xaringan")
 ## Project Snapshot
 ``` 
 oek-templates
-     - includes
+
      - oek-templates.Rproj (Project file)
+     - ude_quarto.qmd
+     - ude_thesis.rmd
+     - ude_xaringan.rmd
      - Resources 
-           - thesis_paper
-           - quarto_slides
-           - xaringan_slides
+           - references(thesis report)
+           - template(thesis report)
+           - quarto_slides(resources)
+           - xaringan_slides(resources)
+     - includes
 ```
 
 
