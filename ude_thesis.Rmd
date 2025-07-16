@@ -14,7 +14,7 @@ abstract: "The abstract is written directly in the YAML header."
 deadline: "Deadline"
 output:
   pdf_document:
-    keep_tex: yes
+    keep_tex: no
     template: Resources/template.tex
     fig_caption: yes
     citation_package: biblatex
