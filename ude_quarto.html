@@ -210,6 +210,8 @@
       margin-right: 0; 
     }
   </style>
+  <script type="module" src="ude_quarto_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+  <link href="ude_quarto_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
   <script src="ude_quarto_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 
   <script src="ude_quarto_files/libs/plotly-binding-4.11.0/plotly.js"></script>
@@ -239,6 +241,12 @@
   <link href="ude_quarto_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
 
   <script src="ude_quarto_files/libs/leaflet-binding-2.2.2/leaflet.js"></script>
+
+  <script type="ojs-define">
+
+  {"contents":[{"name":"actors","value":{"x":[0.8364,0.1181,0.65,-0.1936,-0.2516,-0.2675,1.8203,0.6408,-0.2495,-0.4799,0.5231,0.1041,0.7384,-0.1969,1.7237,0.789,0.4304,-1.3641,0.8844,-0.3958,-0.2199,-0.8318,-2.369,3.4875,-0.4454,1.033,-1.6808,0.1137,-0.2885,-0.5109,0.4737,-1.0733,0.5935,1.1008,-0.4743,1.1404,-0.3986,0.2246,-0.2073,1.0912,-3.1091,-2.2833,1.0259,0.2131,-0.943,1.3339,-1.047,1.9131,0.0403,-0.4884,0.0961,-2.5559,-0.7906,0.0206,-0.275,-0.33,0.1444,1.0046,0.6899,-0.6022,-0.7607,-0.0809,-0.0123,1.4484,1.7875,1.8382,0.1967,-0.5841,-0.5121,0.1954,-0.4222,0.6338,1.024,0.6968,-0.3717,0.6152,0.1676,0.2123,0.3413,-1.0782,-0.2078,1.1071,0.5033,1.563,-0.6622,-0.1171,-1.2365,0.5275,-1.9261,2.0445,-0.8334,-0.4022,-0.0941,0.3065,1.26,1.3385,-1.9431,-0.1573,-1.3297,-1.7601],"y":[0.3221,-0.2106,0.2165,-0.2714,0.4576,0.6062,0.7111,-0.1577,-0.799,1.7705,0.3893,1.6108,-0.2122,-2.0142,1.3356,-2.1187,0.1536,0.1019,1.2458,-1.332,2.4999,-0.9613,-0.1301,1.8405,0.2969,-1.0019,1.3387,-0.084,0.8449,1.3339,-0.2218,0.555,0.3861,-0.2323,0.3402,0.2644,0.2152,-0.2236,0.3556,-2.7163,0.3261,1.5395,-0.3385,0.5318,0.5531,0.0261,0.2186,0.2544,-0.2148,-0.2967,-0.9906,-0.3167,1.4881,-0.5315,0.4204,1.3626,0.376,1.0904,0.9672,-0.3839,0.3431,-1.0617,1.6449,-1.2627,-0.3952,-0.2864,-0.5522,0.8238,-0.8116,-0.375,-0.7023,-1.5067,0.5241,1.7402,0.5047,0.1268,-0.2121,-0.6281,-0.3086,-0.4697,-1.4719,0.9206,0.439,-0.8946,1.3076,0.1591,-1.6494,-0.6318,0.5503,0.6448,-0.5134,-1.1593,0.4744,1.423,-1.0049,-0.5559,-2.0198,0.1917,-0.4032,-0.6836]}}]}
+
+  </script>
 
   <script>
   window.MathJax = {
@@ -275,6 +283,7 @@ Jens Klenke
 <li><a href="#/mathematics-and-reveal.js" id="/toc-mathematics-and-reveal.js">Mathematics and reveal.js</a></li>
 <li><a href="#/static-plot" id="/toc-static-plot">Static plot</a></li>
 <li><a href="#/interactive-graph" id="/toc-interactive-graph">Interactive Graph</a></li>
+<li><a href="#/interactive-graph-with-sliding-bar" id="/toc-interactive-graph-with-sliding-bar">Interactive graph with sliding bar</a></li>
 <li><a href="#/table" id="/toc-table">Table</a></li>
 <li><a href="#/lets-you-run-python" id="/toc-lets-you-run-python">Lets you run Python</a></li>
 <li><a href="#/references" id="/toc-references">References</a></li>
@@ -383,8 +392,8 @@ These notes are written in a fenced block starting with <code>::: notes</code>.<
 <span id="cb1-9"><a href=""></a>        <span class="at">height =</span> <span class="dv">300</span> </span>
 <span id="cb1-10"><a href=""></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="htmlwidget-0dffd639fd806f3bfc5b" style="width:300px;height:300px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0dffd639fd806f3bfc5b">{"x":{"visdat":{"5d0436604710":["function () ","plotlyVisDat"]},"cur_data":"5d0436604710","attrs":{"5d0436604710":{"x":{},"y":{},"mode":"markers","color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"width":300,"height":300,"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"mpg"},"yaxis":{"domain":[0,1],"automargin":true,"title":"hp"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[22.800000000000001,24.399999999999999,22.800000000000001,32.399999999999999,30.399999999999999,33.899999999999999,21.5,27.300000000000001,26,30.399999999999999,21.399999999999999],"y":[93,62,95,66,52,65,97,66,91,113,109],"mode":"markers","type":"scatter","name":"4","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[21,21,21.399999999999999,18.100000000000001,19.199999999999999,17.800000000000001,19.699999999999999],"y":[110,110,110,105,123,123,175],"mode":"markers","type":"scatter","name":"6","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[18.699999999999999,14.300000000000001,16.399999999999999,17.300000000000001,15.199999999999999,10.4,10.4,14.699999999999999,15.5,15.199999999999999,13.300000000000001,19.199999999999999,15.800000000000001,15],"y":[175,245,180,180,180,205,215,230,150,150,245,175,264,335],"mode":"markers","type":"scatter","name":"8","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3ddd50b4cdc0169c4a87" style="width:300px;height:300px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3ddd50b4cdc0169c4a87">{"x":{"visdat":{"7dd8ddc56ce":["function () ","plotlyVisDat"]},"cur_data":"7dd8ddc56ce","attrs":{"7dd8ddc56ce":{"x":{},"y":{},"mode":"markers","color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"width":300,"height":300,"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"mpg"},"yaxis":{"domain":[0,1],"automargin":true,"title":"hp"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[22.800000000000001,24.399999999999999,22.800000000000001,32.399999999999999,30.399999999999999,33.899999999999999,21.5,27.300000000000001,26,30.399999999999999,21.399999999999999],"y":[93,62,95,66,52,65,97,66,91,113,109],"mode":"markers","type":"scatter","name":"4","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[21,21,21.399999999999999,18.100000000000001,19.199999999999999,17.800000000000001,19.699999999999999],"y":[110,110,110,105,123,123,175],"mode":"markers","type":"scatter","name":"6","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[18.699999999999999,14.300000000000001,16.399999999999999,17.300000000000001,15.199999999999999,10.4,10.4,14.699999999999999,15.5,15.199999999999999,13.300000000000001,19.199999999999999,15.800000000000001,15],"y":[175,245,180,180,180,205,215,230,150,150,245,175,264,335],"mode":"markers","type":"scatter","name":"8","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -400,8 +409,63 @@ These notes are written in a fenced block starting with <code>::: notes</code>.<
 <span id="cb2-7"><a href=""></a>  <span class="fu">addPopups</span>(<span class="at">lng =</span> <span class="fl">7.0084</span>, <span class="at">lat =</span> <span class="fl">51.4640</span>,</span>
 <span id="cb2-8"><a href=""></a>            <span class="at">popup =</span> <span class="st">"Chair of Econometrics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="htmlwidget-ad03ee05cdb290e1e7c7" style="width:40%;height:200px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ad03ee05cdb290e1e7c7">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPopups","args":[51.464,7.0084,"Chair of Econometrics",null,null,{"maxWidth":300,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"className":""}]}],"setView":[[51.464,7.0084],16,[]],"limits":{"lat":[51.464,51.464],"lng":[7.0084,7.0084]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d1b9610bf79805520203" style="width:40%;height:200px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d1b9610bf79805520203">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPopups","args":[51.464,7.0084,"Chair of Econometrics",null,null,{"maxWidth":300,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"className":""}]}],"setView":[[51.464,7.0084],16,[]],"limits":{"lat":[51.464,51.464],"lng":[7.0084,7.0084]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="interactive-graph-with-sliding-bar" class="slide level2">
+<h2>Interactive graph with sliding bar</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">ojs_define</span>(<span class="at">actors =</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-2"><a href=""></a>  <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),</span>
+<span id="cb3-3"><a href=""></a>  <span class="at">y =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb3-4"><a href=""></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="layout-sidebar layout-sidebar-left">
+<div class="cell panel-sidebar">
+<div class="sourceCode cell-code" id="cb4" data-startfrom="140" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 139;"><span id="cb4-140"><a href=""></a>viewof talentWeight <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">2</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> { <span class="dt">value</span><span class="op">:</span> <span class="fl">0.7</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"talent weight"</span> })</span>
+<span id="cb4-141"><a href=""></a>viewof looksWeight <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">2</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> { <span class="dt">value</span><span class="op">:</span> <span class="fl">0.7</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"looks weight"</span> })</span>
+<span id="cb4-142"><a href=""></a>viewof minimum <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">2</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> { <span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"min fame"</span> })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell panel-fill">
+<div class="sourceCode cell-code" id="cb5" data-startfrom="147" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 146;"><span id="cb5-147"><a href=""></a><span class="im">import</span> { plotActors } <span class="im">from</span> <span class="st">'./actors.js'</span><span class="op">;</span></span>
+<span id="cb5-148"><a href=""></a><span class="fu">plotActors</span>(actors<span class="op">,</span> talentWeight<span class="op">,</span> looksWeight<span class="op">,</span> minimum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -442,16 +506,16 @@ These notes are written in a fenced block starting with <code>::: notes</code>.<
 <section id="lets-you-run-python" class="slide level2">
 <h2>Lets you run Python</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb3-2"><a href=""></a><span class="co"># helper R code</span></span>
-<span id="cb3-3"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb6-2"><a href=""></a><span class="co"># helper R code</span></span>
+<span id="cb6-3"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-2"><a href=""></a>r_x <span class="op">=</span> np.array(r.x)          <span class="co"># r.x is the R vector</span></span>
-<span id="cb4-3"><a href=""></a>r_x.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href=""></a>r_x <span class="op">=</span> np.array(r.x)     <span class="co"># r.x is the R vector</span></span>
+<span id="cb7-3"><a href=""></a>r_x.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>np.float64(-0.0032330423933783843)</code></pre>
+<pre><code>np.float64(0.006435292252564823)</code></pre>
 </div>
 </div>
 <p>Here’s a BibTeX entry you can drop into your references.bib to cite reference, in the same style <span class="citation" data-cites="Python3.11">(<a href="#/references" role="doc-biblioref" onclick="">Python Software Foundation and Guido van Rossum 2023</a>)</span></p>
@@ -697,6 +761,17 @@ Python Software Foundation, and Guido van Rossum. 2023. <em>Python Language Refe
           RevealZoom
         ]
       });
+    </script>
+    <script type="ojs-module-contents">
+    eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiB0YWxlbnRXZWlnaHQgPSBJbnB1dHMucmFuZ2UoWy0yLCAyXSwgeyB2YWx1ZTogMC43LCBzdGVwOiAwLjAxLCBsYWJlbDogXCJ0YWxlbnQgd2VpZ2h0XCIgfSlcbnZpZXdvZiBsb29rc1dlaWdodCA9IElucHV0cy5yYW5nZShbLTIsIDJdLCB7IHZhbHVlOiAwLjcsIHN0ZXA6IDAuMDEsIGxhYmVsOiBcImxvb2tzIHdlaWdodFwiIH0pXG52aWV3b2YgbWluaW11bSA9IElucHV0cy5yYW5nZShbLTIsIDJdLCB7IHZhbHVlOiAxLCBzdGVwOiAwLjAxLCBsYWJlbDogXCJtaW4gZmFtZVwiIH0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJpbXBvcnQgeyBwbG90QWN0b3JzIH0gZnJvbSAnLi9hY3RvcnMuanMnO1xucGxvdEFjdG9ycyhhY3RvcnMsIHRhbGVudFdlaWdodCwgbG9va3NXZWlnaHQsIG1pbmltdW0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3RhbGVudFdlaWdodCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdsb29rc1dlaWdodCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdtaW5pbXVtJykifV19
+    </script>
+    <script type="module">
+    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+    window._ojs.paths.runtimeToDoc = "../../..";
+    window._ojs.paths.runtimeToRoot = "../../..";
+    window._ojs.paths.docToRoot = "";
+    window._ojs.selfContained = false;
+    window._ojs.runtime.interpretFromScriptTags();
     </script>
     
 
