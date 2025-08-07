@@ -3,9 +3,9 @@
 ## Purpose 
 
 ### UDE thesis 
-The UDE Thesis folder contains all source files, figures, datasets and build scripts needed to compose and compile your University of Duisburg-Essen thesis. It is organized to make it easy to…
-- Maintain a clean LaTeX source structure
-- Manage bibliography with BibTeX or Biber
+The UDE Thesis folder contains all source files, figures, datasets and build scripts needed to compose and compile your University of Duisburg-Essen thesis. It provides:
+- Clean LaTeX source structure
+- Bibliography with BibTeX or Biber
 - Automate PDF generation via make or build scripts
 - Version-control large assets (e.g. high-resolution images or data tables)
 
