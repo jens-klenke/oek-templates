@@ -14,9 +14,18 @@ format:
     incremental: False                 # bullets appear one-by-one
     # theme: [default, Resources/quarto_slides/assets/clean.scss]
     smaller: true
-    html-math-method: katex
     title-slide-attributes:
       data-background-image: Resources/quarto_slides/assets/duetower.png
+    html-math-method: mathjax
+    include-in-header:
+      - text: |
+          <script>
+          window.MathJax = {
+            tex: {
+              tags: 'ams'
+            }
+          };
+          </script>  
 execute:
   echo: true   
 filters:
@@ -69,6 +78,24 @@ Quarto **call-outs** are the easiest way to highlight ideas.
 :::
 :::
 
+## Mathematics and reveal.js
+
+- Consider, by way of illustration, the model
+  
+  \begin{align}
+  \label{eq:regression}
+  \text{E}(Y|X) & = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k \\
+  \label{eq:variance}
+  \text{Var}(Y|X) & = \sigma(X)^2
+  \end{align}
+  
+- Note that \eqref{eq:regression} is a regression model and \eqref{eq:variance} is a volatility model
+
+- Note also that we are using standard $\LaTeX$ syntax (e.g., `\text{E}(Y|X) & = \beta_0`) to render the mathematics
+
+- As well, standard equation numbering and cross referencing via the `\label{}` and `\eqref{}` commands are supported thanks to MathJax
+
+- Also, multi line equations are supported via `\begin{align}...\end{align}` etc.
 
 ## Static plot 
 
@@ -80,8 +107,8 @@ plot_ly(mtcars,
         color = ~factor(cyl),
         type  = "scatter",
         mode  = "markers",
-        width="40%",    # fill 80% of slide width
-        height="30vh"
+        width = 300,    
+        height = 300 
         )
 
 ```
@@ -99,13 +126,25 @@ leaflet(width  = "40%",    # 60% of slide width
             popup = "Chair of Econometrics")
 ```
 
+## Table  
+
+| Default | Left | Right | Center |
+|---------|:-----|------:|:------:|
+| 12      | 12   |    12 |   12   |
+| 123     | 123  |   123 |  123   |
+| 1       | 1    |     1 |   1    |
+
+: Demonstration of pipe table syntax
+
 ## Lets you run Python 
 
 
 ```{r}
+library(reticulate)
 # helper R code
 x <- rnorm(1e5)
 ```
+
 
 ```{python}
 
