@@ -74,4 +74,5 @@ oek-templates
      - includes
 ```
 
-
+## Errors & Warnings
+- Keep your packages up-to-date. You can update them using ```install.packages("your_package_name")
