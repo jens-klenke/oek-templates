@@ -66,6 +66,7 @@ oek-templates
      - ude_quarto.qmd
      - ude_thesis.rmd
      - ude_xaringan.rmd
+     - _extensions (add ons for xaringan)
      - Resources 
            - references(thesis report)
            - template(thesis report)
