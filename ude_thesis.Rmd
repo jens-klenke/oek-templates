@@ -14,7 +14,7 @@ abstract: "The abstract is written directly in the YAML header."
 deadline: "Deadline"
 output:
   pdf_document:
-    keep_tex: no
+    keep_tex: yes
     template: Resources/template.tex
     fig_caption: yes
     citation_package: biblatex
@@ -22,6 +22,7 @@ output:
 toc: true
 lot: true
 lof: true
+loa: true
 graphics: true
 biblio-title: References
 fontsize: 11pt
@@ -30,9 +31,14 @@ biblio-files: Resources/references.bib
 classoption: a4paper
 language: english
 linkcolor: black
+header-includes:
+  - \newacronym{itt}{ITT}{Intention-to-Treat} 
+  - \newacronym{iv}{IV}{Instrumental Variables} 
+  - \newacronym{sbcf}{SBCF}{Shrinkage Bayesian Causal Forest} 
+  - \newacronym{sbcf-iv}{SBCF-IV}{Shrinkage Bayesian Instrumental Variable Causal Forest} 
 ---
 
-<!-- % Template Version 1.2 -->
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
@@ -44,7 +50,7 @@ options(digits = 7) # default of R
 
 ## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents . For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
@@ -56,7 +62,7 @@ summary(cars)
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE, fig.cap="\\label{fig:pressure} Pressure", fig.height=4, fig.pos="t"}
+```{r pressure, echo=FALSE, fig.cap="\\label{fig:pressure} Pressure"}
 plot(pressure)
 ```
 
@@ -93,7 +99,7 @@ In Empirical work it's crucial not only to present your results but also to expl
 
 Consider the following Example: you are working on an analysis of black cherry trees and want to present n observations to the reader You can do that using the knitr::kable() function.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, trees}
 data(trees)
 n <- 6
 knitr::kable(trees[sample(1:nrow(trees),n),], 
@@ -121,7 +127,7 @@ stargazer::stargazer(mod,label  = "regression", title = "Regression results", he
 
 Now that we have our model we can visualize it.
 
-```{r, echo = FALSE, fig.cap= "Dataset and regression"}
+```{r, echo = FALSE, fig.cap= "Dataset and regression", Regression}
 plot(trees$Volume ~ trees$Height)
 abline(mod)
 ```
@@ -136,6 +142,12 @@ abline(mod)
 
 \pagebreak
 
+
+# Acronyms usage
+
+The \acrshort{itt} analysis ensures that all randomized participants are included, regardless of whether they adhered to the treatment protocol. We employed \acrshort{iv} estimation to address potential endogeneity in the treatment assignment. The \acrshort{sbcf} model was applied to estimate heterogeneous treatment effects across subpopulations. To account for unobserved confounding, we extended our analysis using the \acrshort{sbcf-iv} approach.
+
+\pagebreak
 
 ## Citations
 

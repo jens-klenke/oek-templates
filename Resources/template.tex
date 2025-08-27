@@ -5,6 +5,7 @@ $else$
 \usepackage{lmodern}
 $endif$
 
+
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
@@ -149,6 +150,16 @@ $endif$
 %%% Change title format to be more compact
 \usepackage{titling}
 
+% Acronyms package defining
+\urlstyle{same}  % don't use monospace font for urls
+$if(loa)$
+  \usepackage[acronym,nomain,nonumberlist]{glossaries}
+  \usepackage{supertabular}
+  \setacronymstyle{short-long}s
+  \makenoidxglossaries
+  }
+$endif$
+
 % Create subtitle command for use in maketitle
 \newcommand{\subtitle}[1]{
   \posttitle{
@@ -267,6 +278,9 @@ $endif$
   $author$\\
   \end{center}
   \vspace{4cm}
+  
+ 
+  
 
   \noindent\begin{minipage}[t]{0.5\textwidth}
   \IfLanguageName{english}{Matriculation Number:}{Matrikelnummer}
@@ -319,6 +333,7 @@ $endif$
 
 \end{titlepage}
 
+
 % Ends the declared geometry for the titlepage
 \restoregeometry
 
@@ -340,6 +355,14 @@ $if(toc)$
 \tableofcontents
 }
 $endif$
+
+
+$if(loa)$
+% Acronyms 
+\newpage
+\printnoidxglossary[type=acronym, style=superheader,title=Acronyms]
+$endif$
+
 $if(lot)$
 \newpage
 \listoftables
@@ -388,6 +411,5 @@ Ich versichere an Eides statt durch meine Unterschrift, dass ich die vorstehende
 \rule{0pt}{2\baselineskip} %
 \par\noindent\makebox[2.25in]{\indent Essen, den \hrulefill} \hfill\makebox[2.25in]{\hrulefill}%
 \par\noindent\makebox[2.25in][l]{} \hfill\makebox[2.25in][c]{$author$}%
-
 
 \end{document}
