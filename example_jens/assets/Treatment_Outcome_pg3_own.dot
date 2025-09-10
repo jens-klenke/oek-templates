@@ -1,0 +1,21 @@
+digraph "Causal Diagramm RDD" {
+  layout=neato
+  fontname="Helvetica,Arial,sans-serif"
+  bgcolor=transparent
+  imagescale=both
+  node [fontname="Helvetica,Arial,sans-serif"]
+  edge [fontname="Helvetica,Arial,sans-serif"]
+  node [shape=none];
+  "Lottery (Z)" [pos="-1,0!"]
+  "Medicaid (W)" [pos="1,0!"]
+  "Covariates (X)" [pos="2,1!"]
+  "Outcome (Y)" [pos="3,0!"]
+
+  
+  "Lottery (Z)" -> "Medicaid (W)"
+   "Covariates (X)" ->  "Outcome (Y)"
+   "Medicaid (W)" -> "Outcome (Y)"
+   "Covariates (X)" -> "Medicaid (W)"
+
+  
+}

@@ -1,0 +1,1482 @@
+---
+title: "Estimating Heterogeneous Treatment Effects Using Instrumental Variables (IV)"
+subtitle: "A Shrinkage Bayesian Causal Forest Approach"
+author: "Jens Klenke & Lennard Maßmann &mdash; University of Duisburg-Essen"
+date: "Statistische Woche 2025 | Wiesbaden &mdash; September 4, 2025"
+output:
+  xaringan::moon_reader:
+    css: ["default", "assets/ude_fonts.css", "assets/ude.css"]
+    self_contained: true # if true, fonts will be stored locally
+    seal: false # show a title slide with YAML information
+    includes:
+      in_header: "assets/mathjax-equation-numbers.html"
+    nature:
+      beforeInit: ["assets/remark-zoom.js", "https://platform.twitter.com/widgets.js"] #, "assets/slide_count.js"] # , 'assets/custom-progressbar.js'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9' #alternatives '16:9' or '4:3' or others e.g. 13:9
+      navigation:
+        scroll: TRUE #disable slide transitions by scrolling
+---
+```{r packages, include = FALSE, echo=FALSE, cache=FALSE}
+
+# put this in a setup chunk BEFORE you render any tables
+htmltools::htmlDependency(
+  name = "jquery",
+  version = "3.6.0",
+  src = c(href = "https://code.jquery.com"),
+  script = "jquery-3.6.0.min.js"
+) |> htmltools::attachDependencies(NULL)
+
+
+library(RefManageR)
+BibOptions(check.entries = FALSE,
+           bib.style = "authoryear", 
+           cite.style = 'authoryear', 
+           max.names = 1,        # Limits authors to 2 before using 'et al.'
+           first.inits = TRUE,    # Uses initials instead of full first names
+           longnamesfirst = FALSE,
+#           cite.combine = TRUE,
+           style = "markdown",
+           hyperlink = 'to.doc', 
+           dashed = FALSE)
+myBib <- ReadBib("assets/bib.bib", check = FALSE)
+
+# packages
+source(here::here('06_presentation/assets/packages.R'))
+
+# load functions
+# source all files in the functions folder
+invisible(sapply(list.files(here::here('01_code/functions'), full.names = TRUE), 
+                 source))
+
+# load data
+load(here::here('06_presentation/data/data_uncorr_0.75_n1000.RData'))
+```
+
+```{r xaringanExtra_progress-bar, echo = FALSE}
+#xaringanExtra::use_progress_bar(color = "#004c93", location = "bottom")
+xaringanExtra::use_panelset()
+```
+
+```{r xaringanExtra-clipboard_2, echo=FALSE}
+# copy button styles mainly in ude.css 
+# https://github.com/gadenbuie/xaringanExtra
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-clipboard\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #00ff00\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
+
+r_black <- icon_style(fontawesome$brands$'r-project', fill = "black")
+table <- icon_style(fontawesome("table", style = "solid"), scale = 1, fill = "#004c93", class = "fa-icon")
+table <- icon_style(
+  fontawesome("table", style = "solid"), 
+  scale = 1,              # bigger icon
+  fill = "#004c93",       # base color
+  class = "fa-icon",      # custom hoverable class
+  href = "#appendix-table",  # internal link
+  title = "Go to table"
+)
+# Inject a class attribute into <svg>
+table_icon <- sub("<svg", "<svg class='fa-icon'", table)
+arrow_left <- icon_style(fontawesome("arrow-left", style = "solid"), scale = 1, fill = "#004c93")
+arrow_right <- icon_style(fontawesome("arrow-right", style = "solid"), scale = 1.2, fill = "#004c93")
+file <- icon_style(fontawesome("file-alt", style = "solid"), scale = 1, fill = "#004c93", class = "fa-icon")
+file_alt <- sub("<svg", "<svg class='fa-icon'", file)
+```
+
+```{r moon_reader, include=FALSE, eval = FALSE}
+# setup for moon reader
+# copy it to console
+options(servr.interval = 0.5)
+xaringan::inf_mr()
+```
+
+```{r, eval = FALSE, include = FALSE}
+
+## Why should we care?
+
+#- Well-received in the literature
+#  - Published in Journal of Computational and Graphical Statistics, one of the top 30 journals on Statistics and Probability according to [SCImago](https://www.scimagojr.com/journalrank.php?category=2613).
+#  - 1792 citations 
+  
+#- Huge impact on causal inference literature
+#  - Advantages of using Bayesian Additive Regression Trees (BART) for causal inference estimation in non-experimental settings over common alternatives in the causal inference literature.
+#  - It's seminal paper that inspired future research.
+#---
+
+```
+
+class: title-slide center middle
+
+# `r rmarkdown::metadata$title`
+## `r rmarkdown::metadata$subtitle`
+<br><br>
+### `r rmarkdown::metadata$author`
+
+#### `r rmarkdown::metadata$date`
+
+
+---
+## A motivating example | OHIE &mdash; I
+
+### Oregon Health Insurance Experiment (OHIE)
+
+- The OHIE was a randomized controlled trial (RCT) conducted in 2008 `r Citep(myBib, key = "finkelstein_oregon_2012")`
+- It assesses the effects of **expanding Medicaid** coverage on **health outcomes**, financial security, and healthcare utilization
+- The US state of Oregon used a lottery system to allocate a limited number of spots to uninsured, low-income adults 
+  - This created a **natural experiment**
+- However, people are not forced to participate 
+  - Difference between randomized treatment **assignment** and treatment **receipt/take-up**
+  - This leads to **potential non-compliance** among individuals and an irregular assignment mechanism
+
+???
+
+- **natural experiment** allowing researchers to compare those who received Medicaid to those who did not. 
+
+---
+
+## A motivating example | OHIE &mdash; II
+
+.blockquote.font90[
+### The Oregon Health Insurance Experiment (OHIE)
+- .ude-colour[**Target outcome:**] health
+  - .ude-colour[**Definition:**] number of days in the last $30$ days when health **did not** limit usual activities
+- .ude-colour[**Treatment assignment**]: randomized lottery for access to Medicaid 
+  - treated: 11,808 (winners); controlled: 11,933 (non-winners)
+- .ude-colour[**Treatment take-up**]: actual enrollment after winning the lottery
+- .ude-colour[**Pre-treatment variables**]:
+  - Age, gender, race/ethnicity
+  - Income level, employment status, education level
+  - Pre-existing health conditions, healthcare utilization history before the lottery.
+- .ude-colour[**(Our) Estimation Goal**]: the **conditional Complier Average Causal Effect** (cCACE) of Medicaid expansion on health
+]
+
+???
+- **health:** includes physical and mental health
+---
+
+## Causality 
+
+.font80[
+.blockquote[
+#### Definition:
+We can say that \(X\) **causes** \(Y\) if, were we to intervene and change the value of \(X\), then the distribution of \(Y\) would also change as a result.
+.font80.right[`r Citep(myBib, key = "Huntington-Klein_2022")`]
+
+]
+<br>]
+
+--
+
+.font80[
+
+#### Causality with Instrumental Variables (IV)
+
+- Instead of trying to strip away all the undesirable variation using controls, an instrumental variable (IV) is a source of variation that allows us to isolate the variance of interest.
+- IV designs attempt to mimic a randomized experiment, but using statistics and opportune settings instead of actually being able to influence or randomize anything.
+]
+
+.font80[
+#### Causal Directed Acyclic Graph (DAG) for IV
+]
+
+```{r IV_DAG, echo=F, cache=F, fig.height=1, fig.cap="<b>Figure 1:</b> Directed acyclic graph (DAG) illustrating an instrumental variable setting. Source: Author’s illustration.", fig.align='center'}
+m <- DiagrammeR::grViz(here::here("06_presentation/032025_DCC_Aachen/assets/Treatment_Outcome_pg3_own.dot"), height = 150, width = "100%")
+widgetframe::frameableWidget(m)
+```
+
+
+???
+.font70.right[ There is no single definition for causality.]
+
+---
+
+## Potential outcomes framework &mdash; I
+### Setting
+
+- Potential outcomes framework by `r Citet(myBib, key = "rubin_bayesian_1978")`
+- (binary) treatment assignment<sup>1</sup>
+    $$Z_i = \begin{cases} 0, & \text{no treatment assignment (control)} \\ 1, & \text{treatment assignment} \end{cases}$$
+
+
+- Causal individual effect under a regular assignment mechanism
+  - Comparison of .ude-colour[**potential**] outcomes:
+  $$\tau_i = Y_i(Z_i = 1) - Y_i(Z_i = 0)$$
+
+
+.footnote[
+[1] The framework can be extended to multivalued or continuous treatment
+]
+
+---
+
+
+## Potential outcomes framework &mdash; II
+### Setting
+
+- Under an **irregular assignment mechanism**, treatment assignment and treatment receipt do not necessarily align due to non-compliance.
+
+- (binary) treatment receipt/take-up
+    $$W_i(Z_i) = \begin{cases} 0, & \text{no treatment receipt} \\ 1, & \text{treatment receipt}
+    \end{cases}$$
+
+  
+- Both potential outcomes are not observable for an individual $i$, the **fundamental problem of causal inference**, and we are left with $Y_i(Z_i, W_i), W_i(Z_i)$. 
+    - Usually, the Stable Unit Treatment Value Assumption (**SUTVA**) is invoked to relate potential outcomes to observed quantities $Y_i, W_i$: 
+      - $W_i = W_i(Z_i=1) Z_i + W_i(Z_i=0) (1 - Z_i)$
+      - $Y_i = Y_i(Z_i=1, W_i=1)Z_i + Y_i(Z_i=0, W_i=0)(1 - Z_i)$
+
+---
+
+## Potential outcomes framework &mdash; III
+### Treatment Effect Estimation
+
+<br>
+
+**Target:** conditional Complier Average Causal Effect (cCACE): 
+
+\begin{align*}
+      \tau_{\text{CACE}}(x) = \frac{\text{ITT}_{Y}(x)}{\pi_C(x)} &= \frac{\mathbb{E}[Y_i(Z_i = 1, W_i) \mid X_i = x] - \mathbb{E}[Y_i(Z_i = 0, W_i) \mid X_i = x]}{\mathbb{E}[W_i(Z_i = 1) \mid  X_i = x] - \mathbb{E}[W_i(Z_i = 0) \mid X_i = x]}
+\end{align*}
+
+--
+
+name: TEE
+
+Under the standard IV assumptions<sup>2</sup> in the potential outcomes framework, the cCACE reduces to a ratio of **conditional expectations**:
+
+\begin{align*}
+      \tau_{\text{CACE}}(x) &= \frac{\mathbb{E}[Y_i \mid Z_i = 1, X_i = x] - \mathbb{E}[Y_i \mid Z_i = 0, X_i = x]}{\mathbb{E}[W_i \mid Z_i = 1, X_i = x] - \mathbb{E}[W_i \mid Z_i = 0, X_i = x]} 
+\end{align*}
+
+
+
+.footnote[
+[2] [_Relevance_, _Unconfoundedness_, _Exclusion restriction_, _Monotonicity_ ](#iv-assumption)
+]
+
+???
+
+## Relevance
+If the instrument doesn’t affect treatment take-up at all, then it provides no usable variation to identify causal effects.
+
+## Unconfoundedness
+Nothing unobserved should jointly affect both the instrument and the outcome/treatment.
+
+## Exclusion restriction
+No “backdoor” pathway from instrument to outcome.
+- cant' test it
+
+## Monotonicity 
+The instrument moves people in one direction only — nobody does the opposite of what the instrument pushes them toward.
+- no defiers! -- nobody systematically does the opposite
+- cant' test it
+
+---
+
+## Potential outcome framework &mdash; IV
+
+### How can we best estimate the conditional CACE?
+
+<br>
+
+.blockquote[
+
+#### Challenges:
+
+- $X$ is potentially **high-dimensional**
+- $Y(1)$ and $Y(0)$ may **not** be **linearly** related to $X$
+- The distribution of $X$ might be quite different across treatment groups
+]
+
+---
+
+.font90[
+## Model
+
+- BCF-IV proposed by `r Citet(myBib, key = "bargagli-stoffi_2022")` is designed to identify and estimate heterogeneous effects within the subpopulation of units that comply with the treatment assignment, known as compliers
+    - The estimated effects can be considered **doubly local**, representing subgroup effects within the compliers subpopulation
+- BCF-IV identifies heterogeneity through an interpretable **binary tree** structure, with each node representing a distinct subgroup
+]
+
+--
+
+.blockquote.font90[
+#### Our Contribution: 
+  - Generalize estimation of $\widehat{\text{ITT}}_{Y}(x)$ and $\hat\pi_C(x)$ by using **SoftBART**, introduced by  `r Citet(myBib, key = "linero_bayesian_2018")`
+    - Account for sparsity and smoothness in data
+  - Integrate **posterior splitting probabilities** as a measure of variable importance
+    - Improve the discovery of heterogeneous subgroups
+]
+
+---
+
+## Algorithm &mdash; I
+
+----
+#### Input: 
+
+.font90[
+$N$ units $i$ $(X_i, Z_i, W_i, Y_i)$, with
+  - $X_i$ feature vector (covariate)
+  - $Z_i$ treatment assignment (instrumental variable) 
+  - $W_i$ treatment take-up
+  - $Y_i$ observed response
+  ]
+
+#### Output:
+
+.font90[
+A tree structure discovering the heterogeneity in the causal effects and estimates of the cCACE within its leaves
+]
+
+----
+
+--
+
+<br>
+
+#### 1. The Honest Splitting Step:
+  -  Randomly split the total sample into a discovery subsample $(\mathcal{I}_{\text{dis}})$ and an inference subsample $(\mathcal{I}_{\text{inf}})$
+
+---
+## Algorithm &mdash; II
+
+#### 2. The Discovery Step (performed on $I_{\text{dis}})$
+.content-box-blue[
+<ul>
+  <li> Estimation of the cCACE:
+    <ol class="alpha">
+      <li>Estimate conditional Intention-To-Treat effect via SBCF: \(\widehat{\text{ITT}}(x)\)</li>
+      <li>Estimate conditional proportion of compliers via SBART: \(\widehat{\pi}_C(x)\)</li>
+      <li>Estimate cCACE, \(\widehat{\tau}_{\text{CACE}}(x)\), using the estimated values from (a) and (b)</li>
+    </ol>
+  </li>
+  <li>Heterogeneous subpopulations discovery: </li>
+  <ol class="alpha" style="counter-reset: list-counter 3;">
+      <li>Discover the heterogeneous effects by fitting a binary decision tree on: \( (\widehat{\tau}_{\text{CACE}}(x), X, \widehat{s})\)</li>
+  </ol>
+</ul>
+]
+
+--
+
+#### 3. The Inference Step (performed on $I_{\text{inf}}$): 
+
+<ul>
+  <li>Estimate the \(\widehat{\tau}_{\text{CACE}}(x)\) for all discovered subpopulations (i.e., leaves) in the tree discovered in Step 2(d), via IV regression on \(I_{\text{inf}}\)</li>
+</ul>
+
+---
+
+## Model &mdash; Step 2 (a)-(c) &mdash; I
+### BART
+
+- The original BCF-IV algorithm relies on BART that has been proposed in a series of papers by considering the semi-parametric Gaussian regression problem `r Citep(myBib, key = "chipman_2010")`
+
+$$
+Y = f(z, x) + \epsilon, \quad \epsilon \overset{i.i.d}{\sim} \mathcal{N}(0, \sigma^2)
+$$
+
+- BART is a sum-of-trees model that aggregates the fit of many weak-learning trees: 
+
+$$ f(z, x) = \sum_{j = 1}^{m} g(z, x; \mathcal{T}_j, \mathcal{M}_j). $$
+
+
+- The (possibly flexible) function $f(z, x)$ is modeled using prior distributions on trees, $\mathcal{T}_j$, leaf node parameters of each tree, $\mathcal{M}_j = \{\mu_1, \mu_2, \ldots, \mu_b\}| \mathcal{T}_j$, and the error standard deviation $\sigma$ that parameterize a stepwise-continuous function.
+
+
+<!-- with -->
+<!--   - outcome $(Y)$ -->
+<!--   - assigned treatment status $(z)$ -->
+<!--   - realized covariate values $(x)$ -->
+<!--   - additive error term $(\epsilon)$ -->
+
+
+
+  
+
+
+
+<!-- ## Shrinkage Bayesian Additiv Regression Trees (SBART) &mdash; II -->
+<!-- ### Single Tree -->
+
+<!-- - A regression tree creates a partition of the covariate space into subgroups based on a set of splitting rules of the form $z,x_k < C$. The tree fit will be the same for each observation in a given subgroup $\mathcal{A}_j$. -->
+
+
+<!-- - In general, a tree structure $T$ and a collection of leaf node parameters $M = \{\mu_1, \mu_2, \ldots, \mu_b\}$ constitutes a parameter pair $(T, M)$ which parameterizes a step function $g(.)$ that is constant over elements: -->
+<!-- $$ -->
+<!-- g(z, x ; \mathcal{T}, \mathcal{M}) = \mu_j, \quad  \text{if} \quad x, z \in \mathcal{A_j}. -->
+<!-- $$ -->
+
+
+---
+
+## Model &mdash; Step 2 (a)-(c) &mdash; II
+### From BART to SoftBART &mdash; I
+
+- SoftBART has been proposed by `r Citet(myBib, key = "linero_bayesian_2018")` as an extension of BART to account for sparsity and smoothness in the data.
+
+.blockquote[
+How does SoftBART differ from BART? 
+]  
+
+--
+
+
+- First, instead of using uniformly distributed splitting probabilities, SoftBART adds a **sparsity-inducing prior on the splitting probabilities** by sampling $j_b \sim Categorical(s)$ with probability vector $s=\left(s_1, ..., s_P\right)^{\top}$ and
+\begin{align*}
+    s \sim \text{Dirichlet}\left({\alpha/P}, ..., {\alpha/P}\right)
+\end{align*}
+with $\frac{\alpha}{\alpha+P} \sim \text{Beta}\left(\alpha_{s}= 0.5, \beta_{s}=1\right)$ such that $\alpha$ governs the assumed sparsity in $f$ with $\left(\alpha_{s}, \beta_{s}\right)$ balancing between sparse and non-sparse setups.
+
+---
+
+
+<!-- ## Soft Bayesian Additiv Regression Trees (SBART) &mdash; III -->
+## Model &mdash; Step 2 (a)-(c) &mdash; III
+### From BART to SoftBART &mdash; II
+
+<br>
+
+.blockquote[
+How does SoftBART differ from BART? 
+]  
+
+- Second, instead of using hard decision rules $\textbf{1}\left( x_{j_b} \leq C_b \right)$ and $\textbf{1}\left( x_{j_b} > C_b \right)$, SoftBART implements **smoothness-inducing decision rules** by replacing hard indicator functions $\textbf{1}(.)$ with smooth, logistic $\psi \left(. \right)$-functions: 
+\begin{align*}
+    \phi \left(x;\mathcal{T}_j, l \right) = \prod_{b \in \mathcal{A}(l)} \psi \left( \frac{x_{j_b}-C_b}{\tau^{bw}_j} \right)^{R_b} \left[ 1 - \psi \left( \frac{x_{j_b}-C_b}{\tau^{bw}_j} \right) \right]^{1-R_b}.
+\end{align*}
+
+---
+
+## Model &mdash; Step 2 (a)-(c) &mdash; IV
+### From BART to SoftBART &mdash; III
+
+<br>
+
+```{r, echo=FALSE,out.width="50%",fig.cap="<b>Figure 3:</b> Left panel: hard decision rules in BART. Right panel: smoothness-inducing decision rules in SoftBART. Source: Linero (2022).",fig.show='hold', fig.align='center'}
+knitr::include_graphics(here::here("06_presentation/032025_DCC_Aachen/graphics/smoothness_1.png"))
+knitr::include_graphics(here::here("06_presentation/032025_DCC_Aachen/graphics/smoothness_2.png"))
+``` 
+
+---
+
+## Monte Carlo Simulation &mdash; I 
+
+#### DGP
+
+.panelset[
+
+.panel[.panel-name[Random Variables]
+
+.pull-left-2.font90[
+- Treatment assignment
+  - $Z_i \sim \text{Binom}(0.5)$
+- Treatment take-up
+  - $W_i(Z_i=1) \sim \text{Binom}(\pi_{\mathrm{comp}})$
+  - $W_i(Z_i=0) = 0$
+- Observed treatment take-up 
+  - $W^{obs}_i = Z_i W_i(1) +  (1-Z_i) W_i(0)$
+- Covariates
+  - Binary: $X_{i,1}, ..., X_{i, P/2} \sim \text{Binom}(0.5)$
+  - Continuous: $X_{i, P/2+1}, ..., X_{i, P} \sim \mathcal{N}(0, 1)$
+]
+
+
+.pull-right-1[
+.ver_align[
+
+<br>
+<br>
+<br>
+.content-box-blue.font90[
+**Parameter grid**
+
+$\pi_{\mathrm{comp}} \in \{0.5, 0.75\}$  
+$P \in \{10, 50, 100\}$
+]]]
+
+]
+
+.panel[.panel-name[Effects]
+
+.font90[
+- Baseline
+  $$\mu(X_i) = 3 + 1.5 \sin{\left(\pi X_{i, P/2 + 1}\right)} + 0.5\left(X_{i, P/2+2} - 0.5\right)^2 + 1.5\left(2-\mid X_{i, P/2+3} \mid\right)$$
+- Treatment
+
+$$\tau_{CACE}(X_i) = \begin{cases} \;\;\; k & \text{, if } X_i \in l_1 = \{X_i: X_{i,1}=0, X_{i,2}=0 \}, \\
+        -k & \text{, if } X_i \in l_2 = \{X_i: X_{i,1}=1, X_{i, 2}=1 \}, \\
+        \; \; \; 0 & \text{, else}
+    \end{cases}$$
+]
+
+<br>
+
+.pull-right.font90[
+.ver_align[
+.content-box-blue[
+**Parameter grid**
+
+$k \in \{0, 0.2, 0.4, \dots, 2\}$]
+]
+]
+]
+
+.panel[.panel-name[Outcomes]
+
+.font90[
+
+- **No treatment** assignment (lose lottery)
+$$Y_i(Z_i=0) = \mu(X_i) + \mathcal{N}(0, 1)$$
+- **Treatment** assignment (win lottery)
+$$Y_i(Z_i=1) = Y_i(0) + W_i(1) \tau^{CACE}(X_i)$$ 
+- Observed
+$$Y_i^{obs}  = Z_i Y_i(1) +  (1-Z_i) Y_i(0)$$
+]
+]
+]
+
+
+.pull-down-small_margin[
+.font50.text-right[
+DGP based on `r Citep(myBib, key = "caron_2022")` and `r Citep(myBib, key = "bargagli-stoffi_2022")`
+]]
+
+---
+name: metrics-figure
+
+## Monte Carlo Simulation &mdash; II
+
+.pull-left[
+#### Evaluation of $\widehat{\tau}^{\text{CACE}} (x)$ with $\pi_{comp} = 0.75$
+]
+
+.pull-right.text-right[
+[`r file_alt`](#metrics-table)
+]
+
+.panelset[
+
+.panel[.panel-name[MSE]
+
+```{r MSE, echo = FALSE, message=FALSE, fig.align='center', fig.cap='<b>Figure 4:</b> MSE of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\); no systematic differences in estimation quality detected between the subgroups.', out.width='60%', fig.pos='H', escape = FALSE, dpi = 600}
+knitr::include_graphics(here::here("06_presentation/graphics/mse_plot_uncorr_0.75_n10001.png"))
+# Mentioning under compliance?
+```
+
+]
+
+.panel[.panel-name[Bias]
+
+```{r Bias, echo = FALSE, message=FALSE, fig.align='center', fig.cap=' <b>Figure 5:</b> Bias and absolute Bias of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\); no systematic differences in estimation quality detected between the subgroups.', out.width='60%', fig.pos='H', escape = FALSE, dpi = 600}
+knitr::include_graphics(here::here("06_presentation/graphics/bias_plot_uncorr_0.75_n10001.png"))
+```
+
+]
+
+.panel[.panel-name[Coverage]
+
+```{r Coverage, echo = FALSE, message=FALSE, fig.align='center', fig.cap=' <b>Figure 6:</b> Coverage of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\); no systematic differences in estimation quality detected between the subgroups.', out.width='60%', fig.pos='H', escape = FALSE, dpi = 600}
+knitr::include_graphics(here::here("06_presentation/graphics/coverage_plot_uncorr_0.75_n10001.png"))
+
+```
+]
+]
+
+---
+## Monte Carlo Simulation &mdash; III 
+#### SBCF-IV Improvments &mdash; Step 2 (d) of the algorihm
+
+
+```{r rule_dis, echo = FALSE, message=FALSE, fig.align='center', fig.cap='<b>Figure 7:</b> Detection rate of subgroups \\(l_1\\) and \\(l_2\\) and false detection rate over \\(500\\) MCMC runs; no systematic differences for the subgroups. Detection is assessed separately for each subgroup, irrespective of significance, whereas the false detection rate is defined at the replicate level, with a single significant false positive sufficient to flag the replicate.', out.width='70%', fig.pos='H', escape = FALSE, dpi = 600}
+knitr::include_graphics(here::here("06_presentation/graphics/rule_discovery_plot_uncorr_0.75_n10001.png"), auto_pdf = FALSE)
+```
+
+---
+
+##  Back to the Application | OHIE &mdash; III
+
+
+
+.blockquote.font90[
+### Variables
+- .ude-colour[**Target outcome:**] health
+  - .ude-colour[**Definition:**] number of days in the last $30$ days when health **did not** limit usual activities
+- .ude-colour[**Treatment assignment**]: randomized lottery for access to Medicaid 
+  - treated: 11,808 (winners); controlled: 11,933 (non-winners)
+- .ude-colour[**Treatment take-up**]: actual enrollment after winning the lottery
+- .ude-colour[**Pre-treatment variables**]:
+  - Age, gender, race/ethnicity
+  - Income level, employment status, education level
+  - Pre-existing health conditions, healthcare utilization history before the lottery.
+]
+
+
+---
+## OHIE  &mdash; V
+
+```{r OHIE_results1, echo = FALSE, message=FALSE, fig.align='center', fig.cap='<b> Figure 8:</b> Hetergenous treatment effect estimation for the OHIE program.', out.width="90%", fig.pos='H'}
+knitr::include_graphics(here::here('06_presentation/graphics/tree_OHIE1.png'), auto_pdf = FALSE)
+```
+
+---
+## OHIE  &mdash; V
+
+```{r OHIE_results1_high, echo = FALSE, message=FALSE, fig.align='center', fig.cap='<b> Figure 8:</b> Hetergenous treatment effect estimation for the OHIE program.', out.width="90%", fig.pos='H'}
+knitr::include_graphics(here::here('06_presentation/graphics/tree_OHIE_high1.png'), auto_pdf = FALSE)
+```
+
+???
+
+- Scale: last 30 Days
+---
+
+## Conclusion
+
+### Key points
+
+- SBCF-IV improved detection rate of subgroups
+- SBCF-IV reduced false detection Rate for subgroups
+
+$\qquad \qquad \Rightarrow$ Particularly in high-dimensional settings
+
+<br>
+
+### Outlook
+- Other MCMCs settings
+  - For $\pi_{comp} = 0.5$, early results show similar improvements
+  - Explore correlated covariate patterns
+- Implementing leafwise non parametric estimation `r Citep(myBib, key = "kennedy_sharp_2020")` of $\widehat{\tau}^{\text{CACE}} (x)$ in step 3 of the algorithm
+
+---
+
+## References &mdash; I
+
+.font70[
+```{r library, results = 'asis', echo = FALSE, message=FALSE, warning = FALSE, eval = TRUE}
+PrintBibliography(myBib, .opts = list(), start = 1, end = length(myBib))
+```
+]
+
+---
+class: appendix inverse middle center
+
+.font200[Appendix]
+
+---
+class: appendix
+name: iv-assumption
+
+.pull-left-3[
+### Standard IV Assumptions in the Potential Outcomes Framework
+]
+
+.pull-right-0[.text-right[
+<a href="#TEE">`r arrow_left`</a><!-- -->
+]]
+
+<br><br><br>
+
+#### Relevance
+\begin{align*}
+      Cov(W, Z | X) \ne 0, \quad \text{almost surely}  
+\end{align*}
+
+#### Unconfoundedness of the instrument
+\begin{align*}
+      Z_i \perp (Y_i(z, w), W_i(w)), \quad \forall z \in \{0, 1 \}, w \in \{0, 1 \}
+\end{align*}
+
+#### Exclusion restriction
+\begin{align*}
+      Y_i(Z_i=1, w) = Y_i(Z_i=0, w) =  Y_i(w), \quad \forall w \in \{0, 1 \}
+\end{align*}
+
+#### Monotonicity
+\begin{align*}
+      W_i(1) \geq W_i(0).
+\end{align*}
+
+---
+<!-- ## Soft Bayesian Additiv Regression Trees (SBART) &mdash; II -->
+## Model &mdash; Step 2 (a)-(c) &mdash; II
+####  Example of a single tree fit
+
+<br>
+```{r, echo=FALSE, out.width="80%", fig.cap="<b>Figure 2:</b> Left panel: binary tree fit. Right panel: single-tree fits (solid lines) and BART fits (dashed line). Source: Hill (2011).", fig.align='center', eval = TRUE}
+
+NoCite(myBib, key = "hill_bayesian_2011")
+knitr::include_graphics(here::here("06_presentation/graphics/figure_2_clean.png"))
+```
+
+`r NoCite(myBib, key = "hill_bayesian_2011")`
+
+
+---
+class: appendix
+name: metrics-table
+
+## Monte Carlo Simulation &mdash; II
+
+.pull-left[
+#### Evaluation $\pi_{comp} = 0.75$
+]
+
+.pull-right.text-right[
+<a href="#metrics-figure">`r arrow_left`</a><!-- -->
+]
+
+.panelset[
+.panel[.panel-name[P = 10]
+
+```{r apendix_performance_table_p10, echo = FALSE, message=FALSE, out.width="35%", escape = FALSE, results='asis'}
+# html table
+subgroup_metrics %>%
+  pivot_longer(
+    cols = matches("_(mean|sd)$"),
+    names_to = c("metric", "stat"),
+    names_pattern = "^(.*)_(mean|sd)$",
+    values_to = "val"
+  ) %>%
+  pivot_wider(names_from = stat, values_from = val) %>%
+  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+  dplyr::select(-mean, -sd) %>%
+  pivot_wider(names_from = metric, values_from = cell) %>%
+  tidyr::pivot_wider(
+    id_cols = c(ncov, effect),
+    names_from = model,
+    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+    names_glue = "{model}.{.value}"
+  ) %>%
+  # sorting
+  dplyr::select(ncov, effect,
+                starts_with("bcf_iv"),
+                starts_with("sbcf_iv")) %>%
+  dplyr::mutate(
+    spacing_col_0 = " ",
+    spacing_col_1 = " ") %>% # empty columns for spacing
+  dplyr::relocate(spacing_col_0, .after = effect) %>%
+  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+  dplyr::filter(ncov == 10) %>%
+  dplyr::select(-ncov) %>%
+  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+               col.names = c('\\(k\\)', '',
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+               caption= '<b>Table 1:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\) in a setting with \\(10\\) covariates; no systematic differences in estimation quality detected between the subgroups. <br> \\(\\)') %>%
+  kableExtra::column_spec(2, width = '1cm') %>%
+  kableExtra::column_spec(7, width = '1cm') %>%
+  kable_classic(full_width = F) %>%
+  column_spec(8:11, background = c(rep('white', 4), rep('#90ee90', 7))) %>%
+  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+```
+]
+
+.panel[.panel-name[P = 50]
+
+```{r apendix_performance_table_p50, echo = FALSE, message=FALSE, out.width="40%", escape = FALSE, results='asis'}
+# html table
+subgroup_metrics %>%
+  pivot_longer(
+    cols = matches("_(mean|sd)$"),
+    names_to = c("metric", "stat"),
+    names_pattern = "^(.*)_(mean|sd)$",
+    values_to = "val"
+  ) %>%
+  pivot_wider(names_from = stat, values_from = val) %>%
+  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+  dplyr::select(-mean, -sd) %>%
+  pivot_wider(names_from = metric, values_from = cell) %>%
+  tidyr::pivot_wider(
+    id_cols = c(ncov, effect),
+    names_from = model,
+    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+    names_glue = "{model}.{.value}"
+  ) %>%
+  # sorting
+  dplyr::select(ncov, effect,
+                starts_with("bcf_iv"),
+                starts_with("sbcf_iv")) %>%
+  dplyr::mutate(
+    spacing_col_0 = " ",
+    spacing_col_1 = " ") %>% # empty columns for spacing
+  dplyr::relocate(spacing_col_0, .after = effect) %>%
+  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+  dplyr::filter(ncov == 50) %>%
+  dplyr::select(-ncov) %>%
+  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+               col.names = c('\\(k\\)', '',
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+               caption= '<b>Table 2:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\) in a setting with \\(50\\) covariates; no systematic differences in estimation quality detected between the subgroups. <br> \\(\\)') %>%
+  kableExtra::column_spec(2, width = '1cm') %>%
+  kableExtra::column_spec(7, width = '1cm') %>%
+  kable_classic(full_width = F) %>%
+  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+```
+]
+
+.panel[.panel-name[P = 100]
+
+```{r apendix_performance_table_p100, echo = FALSE, message=FALSE, out.width="50%", escape = FALSE, results='asis'}
+# html table
+# html table
+subgroup_metrics %>%
+  pivot_longer(
+    cols = matches("_(mean|sd)$"),
+    names_to = c("metric", "stat"),
+    names_pattern = "^(.*)_(mean|sd)$",
+    values_to = "val"
+  ) %>%
+  pivot_wider(names_from = stat, values_from = val) %>%
+  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+  dplyr::select(-mean, -sd) %>%
+  pivot_wider(names_from = metric, values_from = cell) %>%
+  tidyr::pivot_wider(
+    id_cols = c(ncov, effect),
+    names_from = model,
+    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+    names_glue = "{model}.{.value}"
+  ) %>%
+  # sorting
+  dplyr::select(ncov, effect,
+                starts_with("bcf_iv"),
+                starts_with("sbcf_iv")) %>%
+  dplyr::mutate(
+    spacing_col_0 = " ",
+    spacing_col_1 = " ") %>% # empty columns for spacing
+  dplyr::relocate(spacing_col_0, .after = effect) %>%
+  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+  dplyr::filter(ncov == 100) %>%
+  dplyr::select(-ncov) %>%
+  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+               col.names = c('\\(k\\)', '',
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+               caption= '<b>Table 3:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\) in a setting with \\(100\\) covariates; no systematic differences in estimation quality detected between the subgroups. <br> \\(\\)') %>%
+  kableExtra::column_spec(2, width = '1cm') %>%
+  kableExtra::column_spec(7, width = '1cm') %>%
+  kable_classic(full_width = F) %>%
+  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+```
+]
+
+]
+
+
+---
+
+class: appendix
+
+## Monte Carlo Simulation &mdash; Results
+
+.pull-left[
+#### Evaluation for subgroup $l_1$ with $\pi_{comp} = 0.75$
+]
+
+.pull-right.text-right[
+<a href="#metrics-figure">`r arrow_left`</a><!-- -->
+]
+
+.panelset[
+.panel[.panel-name[P = 10]
+
+```{r apendix_performance_table_l1_p10, echo = FALSE, message=FALSE, out.width="35%", escape = FALSE, results='asis'}
+# html table
+subgroup_sep_metrics %>%
+  dplyr::filter(real_subgroup == 'pos') %>%
+  dplyr::select(-real_subgroup) %>%
+  pivot_longer(
+  cols = matches("_(mean|sd)$"),
+  names_to = c("metric", "stat"),
+  names_pattern = "^(.*)_(mean|sd)$",
+  values_to = "val"
+) %>%
+  pivot_wider(names_from = stat, values_from = val) %>%
+  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+  dplyr::select(-mean, -sd) %>%
+  pivot_wider(names_from = metric, values_from = cell) %>%
+  tidyr::pivot_wider(
+    id_cols = c(ncov, effect),
+    names_from = model,
+    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+    names_glue = "{model}.{.value}"
+  ) %>%
+  # sorting
+  dplyr::select(ncov, effect,
+                starts_with("bcf_iv"),
+                starts_with("sbcf_iv")) %>%
+  dplyr::mutate(
+    spacing_col_0 = " ",
+    spacing_col_1 = " ") %>% # empty columns for spacing
+  dplyr::relocate(spacing_col_0, .after = effect) %>%
+  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+  dplyr::filter(ncov == 10) %>%
+  dplyr::select(-ncov) %>%
+  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+               col.names = c('\\(k\\)', '',
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+               caption= '<b>Table 4:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_1\\) in a setting with \\(10\\) covariates.<br> \\(\\)') %>%
+  kableExtra::column_spec(2, width = '1cm') %>%
+  kableExtra::column_spec(7, width = '1cm') %>%
+  kable_classic(full_width = F) %>%
+  column_spec(8:11, background = c(rep('white', 4), rep('#90ee90', 7))) %>%
+  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+```
+]
+
+.panel[.panel-name[P = 50]
+
+```{r apendix_performance_table_l1_p50, echo = FALSE, message=FALSE, out.width="40%", escape = FALSE, results='asis'}
+# html table
+subgroup_sep_metrics %>%
+  dplyr::filter(real_subgroup == 'pos') %>%
+  dplyr::select(-real_subgroup) %>%
+  pivot_longer(
+  cols = matches("_(mean|sd)$"),
+  names_to = c("metric", "stat"),
+  names_pattern = "^(.*)_(mean|sd)$",
+  values_to = "val"
+) %>%
+  pivot_wider(names_from = stat, values_from = val) %>%
+  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+  dplyr::select(-mean, -sd) %>%
+  pivot_wider(names_from = metric, values_from = cell) %>%
+  tidyr::pivot_wider(
+    id_cols = c(ncov, effect),
+    names_from = model,
+    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+    names_glue = "{model}.{.value}"
+  ) %>%
+  # sorting
+  dplyr::select(ncov, effect,
+                starts_with("bcf_iv"),
+                starts_with("sbcf_iv")) %>%
+  dplyr::mutate(
+    spacing_col_0 = " ",
+    spacing_col_1 = " ") %>% # empty columns for spacing
+  dplyr::relocate(spacing_col_0, .after = effect) %>%
+  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+  dplyr::filter(ncov == 50) %>%
+  dplyr::select(-ncov) %>%
+  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+               col.names = c('\\(k\\)', '',
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+               caption= '<b>Table 5:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_1\\) in a setting with \\(50\\) covariates.<br> \\(\\)') %>%
+  kableExtra::column_spec(2, width = '1cm') %>%
+  kableExtra::column_spec(7, width = '1cm') %>%
+  kable_classic(full_width = F) %>%
+  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+```
+]
+
+.panel[.panel-name[P = 100]
+
+```{r apendix_performance_table_l1_p100, echo = FALSE, message=FALSE, out.width="50%", escape = FALSE, results='asis'}
+# html table
+subgroup_sep_metrics %>%
+  dplyr::filter(real_subgroup == 'pos') %>%
+  dplyr::select(-real_subgroup) %>%
+  pivot_longer(
+  cols = matches("_(mean|sd)$"),
+  names_to = c("metric", "stat"),
+  names_pattern = "^(.*)_(mean|sd)$",
+  values_to = "val"
+) %>%
+  pivot_wider(names_from = stat, values_from = val) %>%
+  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+  dplyr::select(-mean, -sd) %>%
+  pivot_wider(names_from = metric, values_from = cell) %>%
+  tidyr::pivot_wider(
+    id_cols = c(ncov, effect),
+    names_from = model,
+    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+    names_glue = "{model}.{.value}"
+  ) %>%
+  # sorting
+  dplyr::select(ncov, effect,
+                starts_with("bcf_iv"),
+                starts_with("sbcf_iv")) %>%
+  dplyr::mutate(
+    spacing_col_0 = " ",
+    spacing_col_1 = " ") %>% # empty columns for spacing
+  dplyr::relocate(spacing_col_0, .after = effect) %>%
+  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+  dplyr::filter(ncov == 100) %>%
+  dplyr::select(-ncov) %>%
+  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+               col.names = c('\\(k\\)', '',
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+               caption= '<b>Table 6:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_1\\) in a setting with \\(100\\) covariates.<br> \\(\\)') %>%
+  kableExtra::column_spec(2, width = '1cm') %>%
+  kableExtra::column_spec(7, width = '1cm') %>%
+  kable_classic(full_width = F) %>%
+  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+```
+]
+
+]
+
+
+---
+
+class: appendix
+
+## Monte Carlo Simulation &mdash; Results
+
+.pull-left[
+#### Evaluation for subgroup $l_2$ with $\pi_{comp} = 0.75$
+]
+
+.pull-right.text-right[
+<a href="#metrics-figure">`r arrow_left`</a><!-- -->
+]
+
+.panelset[
+.panel[.panel-name[P = 10]
+
+```{r apendix_performance_table_l2_p10, echo = FALSE, message=FALSE, out.width="35%", escape = FALSE, results='asis'}
+# html table
+subgroup_sep_metrics %>%
+  dplyr::filter(real_subgroup == 'neg') %>%
+  dplyr::select(-real_subgroup) %>%
+  pivot_longer(
+  cols = matches("_(mean|sd)$"),
+  names_to = c("metric", "stat"),
+  names_pattern = "^(.*)_(mean|sd)$",
+  values_to = "val"
+) %>%
+  pivot_wider(names_from = stat, values_from = val) %>%
+  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+  dplyr::select(-mean, -sd) %>%
+  pivot_wider(names_from = metric, values_from = cell) %>%
+  tidyr::pivot_wider(
+    id_cols = c(ncov, effect),
+    names_from = model,
+    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+    names_glue = "{model}.{.value}"
+  ) %>%
+  # sorting
+  dplyr::select(ncov, effect,
+                starts_with("bcf_iv"),
+                starts_with("sbcf_iv")) %>%
+  dplyr::mutate(
+    spacing_col_0 = " ",
+    spacing_col_1 = " ") %>% # empty columns for spacing
+  dplyr::relocate(spacing_col_0, .after = effect) %>%
+  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+  dplyr::filter(ncov == 10) %>%
+  dplyr::select(-ncov) %>%
+  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+               col.names = c('\\(k\\)', '',
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+               caption= '<b>Table 7:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_2\\) in a setting with \\(10\\) covariates.<br> \\(\\)') %>%
+  kableExtra::column_spec(2, width = '1cm') %>%
+  kableExtra::column_spec(7, width = '1cm') %>%
+  kable_classic(full_width = F) %>%
+  column_spec(8:11, background = c(rep('white', 4), rep('#90ee90', 7))) %>%
+  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+```
+]
+
+.panel[.panel-name[P = 50]
+
+```{r apendix_performance_table_l2_p50, echo = FALSE, message=FALSE, out.width="40%", escape = FALSE, results='asis'}
+# html table
+subgroup_sep_metrics %>%
+  dplyr::filter(real_subgroup == 'neg') %>%
+  dplyr::select(-real_subgroup) %>%
+  pivot_longer(
+  cols = matches("_(mean|sd)$"),
+  names_to = c("metric", "stat"),
+  names_pattern = "^(.*)_(mean|sd)$",
+  values_to = "val"
+) %>%
+  pivot_wider(names_from = stat, values_from = val) %>%
+  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+  dplyr::select(-mean, -sd) %>%
+  pivot_wider(names_from = metric, values_from = cell) %>%
+  tidyr::pivot_wider(
+    id_cols = c(ncov, effect),
+    names_from = model,
+    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+    names_glue = "{model}.{.value}"
+  ) %>%
+  # sorting
+  dplyr::select(ncov, effect,
+                starts_with("bcf_iv"),
+                starts_with("sbcf_iv")) %>%
+  dplyr::mutate(
+    spacing_col_0 = " ",
+    spacing_col_1 = " ") %>% # empty columns for spacing
+  dplyr::relocate(spacing_col_0, .after = effect) %>%
+  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+  dplyr::filter(ncov == 50) %>%
+  dplyr::select(-ncov) %>%
+  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+               col.names = c('\\(k\\)', '',
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+               caption= '<b>Table 8:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_2\\) in a setting with \\(50\\) covariates.<br> \\(\\)') %>%
+  kableExtra::column_spec(2, width = '1cm') %>%
+  kableExtra::column_spec(7, width = '1cm') %>%
+  kable_classic(full_width = F) %>%
+  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+```
+]
+
+.panel[.panel-name[P = 100]
+
+```{r apendix_performance_table_l2_p100, echo = FALSE, message=FALSE, out.width="50%", escape = FALSE, results='asis'}
+# html table
+subgroup_sep_metrics %>%
+  dplyr::filter(real_subgroup == 'neg') %>%
+  dplyr::select(-real_subgroup) %>%
+  pivot_longer(
+  cols = matches("_(mean|sd)$"),
+  names_to = c("metric", "stat"),
+  names_pattern = "^(.*)_(mean|sd)$",
+  values_to = "val"
+) %>%
+  pivot_wider(names_from = stat, values_from = val) %>%
+  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+  dplyr::select(-mean, -sd) %>%
+  pivot_wider(names_from = metric, values_from = cell) %>%
+  tidyr::pivot_wider(
+    id_cols = c(ncov, effect),
+    names_from = model,
+    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+    names_glue = "{model}.{.value}"
+  ) %>%
+  # sorting
+  dplyr::select(ncov, effect,
+                starts_with("bcf_iv"),
+                starts_with("sbcf_iv")) %>%
+  dplyr::mutate(
+    spacing_col_0 = " ",
+    spacing_col_1 = " ") %>% # empty columns for spacing
+  dplyr::relocate(spacing_col_0, .after = effect) %>%
+  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+  dplyr::filter(ncov == 100) %>%
+  dplyr::select(-ncov) %>%
+  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+               col.names = c('\\(k\\)', '',
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+               caption= '<b>Table 9:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_s\\) in a setting with \\(100\\) covariates.<br> \\(\\)') %>%
+  kableExtra::column_spec(2, width = '1cm') %>%
+  kableExtra::column_spec(7, width = '1cm') %>%
+  kable_classic(full_width = F) %>%
+  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+```
+]
+
+]
+
+```{r include=FALSE, eval = FALSE}
+<!--- class: appendix --->
+
+<!--- ## Bayesian Additiv Regression Trees (BART) &mdash; II --->
+<!--- ### Single Tree --->
+
+<!--- A regression tree creates a partition of the covariate space into subgroups based on a set of splitting rules of the form $z,x_k < C$. The tree fit will be the same for each observation in a given subgroup $\mathcal{A}_j$. --->
+
+
+<!--- In general, a tree structure $T$ and a collection of leaf node parameters $M = \{\mu_1, \mu_2, \ldots, \mu_b\}$ constitutes a parameter pair $(T, M)$ which parameterizes a step function $g(.)$ that is constant over elements: --->
+<!--- $$ --->
+<!--- g(z, x ; \mathcal{T}, \mathcal{M}) = \mu_j, \quad  \text{if} \quad x, z \in \mathcal{A_j}. --->
+<!--- $$ --->
+
+<!--- ## Bayesian Additiv Regression Trees (BART) &mdash; III --->
+<!--- ### Example of a single tree fit --->
+
+<!--- ```{r, echo=FALSE, out.width="80%", fig.align='center', eval = TRUE} --->
+<!--- knitr::include_graphics(here::here("06_presentation/032025_DCC_Aachen/graphics/figure_2.png")) --->
+<!--- ``` --->
+```
+
+---
+class: appendix
+
+## Bayesian Additiv Regression Trees (BART) &mdash; III
+### Sum-of-Trees Model
+
+- BART is a sum-of-trees model that aggregates the fit of many weak-learning trees: 
+
+$$ f(z, x) = \sum_{j = 1}^{m} g(z, x; T_j, M_j). $$
+
+- This approach is similar to Boosting algorithms by constructing trees dependently and on observed data only. 
+
+
+.blockquote[
+How do we avoid overfitting? 
+]  
+
+- BART uses regularization prior distributions to prefer the construction of rather small trees. 
+
+---
+class: appendix
+
+## Bayesian Additiv Regression Trees (BART) &mdash; IV
+### Regularization Prior
+
+
+- The joint distribution of the trees, $T_j$,  the means in the leaves, $\mu_j$, and the residual standard deviation, $\sigma$, can be factored and simplified by independence assumptions such that we are left with specifying priors for 
+  - the trees $p(T_j)$,
+  - the leaf node parameters $p(\mu_j | T_j )$,
+  - and the error standard deviation $p(\sigma)$.
+
+--
+
+.blockquote[
+How do we specify those priors?   
+]
+
+- BART offers established default specifications. Regularization priors constrain the size and fit of each $(T_j, M_j)$ so that each each tree contributes only a small part to the overall fit. It strongly favors weak learners, trees that are small with leaf parameters that are close to zero.
+
+```{r include = FALSE, eval = FALSE}
+---
+class: appendix
+
+## Bayesian Additiv Regression Trees (BART) &mdash; IV
+### Default prior specifications
+
+- $p(T_j)$: Each tree is assigned an independent prior with probability that a node at depth $d$ splits by 
+$$
+\alpha (1 + d)^{-\beta}, \quad \alpha \in (0,1), \quad \beta \in [0, \infty).
+$$
+Default values: $\alpha=0.95, \beta=2$ (sets the probability of a tree with 1,
+2, 3, 4, and over 5 terminal nodes at 0.05, 0.55, 0.28, 0.09, and 0.03, respectively).
+
+
+- $p(\mu_j | T_j )$: We scale the response to lie between $-0.5$ and $0.5$ and use 
+$$\mu_{j} \overset{\text{i.i.d.}}{\sim} N(0, \sigma_{\mu}^2), \quad \text{where} \quad \sigma_{\mu} = \frac{0.5}{k\sqrt{m}}.$$
+Then, $k$ is the number of prior standard deviations between 0 and 0.5. With default value $k = 2$,
+we assign a $95\%$ prior probability that $\mathbb{E}\left[Y | x\right]$ lies between $−0.5$ and $0.5$.
+
+- $p(\sigma)$: inverse chi-squared distributed and calibrated to observed data in relation to OLS-variance.
+
+
+<!--- ## Bayesian Additiv Regression Trees (BART) &mdash; IV --->
+<!--- ### Computation &mdash; I --->
+
+<!--- - Metropolis-Hastings approach for posterior exploration --->
+<!--- - Roughly, the tree and its parameters are sampled by composition --->
+<!---  - First, draw from the marginal posterior distribution of the tree $T_j$ (marginalizing out the leaf parameters). --->
+<!---  - Second, sample the leaf parameters from their full conditional distribution. --->
+<!--- - Simplest sampler version --->
+<!---  - Propose new tree $T^{\star}_j$ sampled from some dependent proposal distribution $q(T^{\star}_j; T_j)$ --->
+<!---  - Compute Metropolis ratio $a = \frac{L(T^{\star}_j)p(T^{\star}_j)}{L(T_j)p(T_j)} \frac{q(T_j;T^{\star}_j)}{q(T^{\star}_j; T_j)}$. --->
+<!---  - With probability $\min(1, a )$, accept $T^{\star}_j$ as new tree and set $T=T^{\star}_j$ , otherwise stick with current $T$. --->
+<!---  - Update parameters $M$ by sampling from full conditional distribution $p(M | T, \text{data})$. --->
+
+<!--- ## Bayesian Additiv Regression Trees (BART) &mdash; IV --->
+<!--- ### Computation &mdash; II --->
+
+<!--- - Most BART implementations use proposal distributions that randomly perturb the current tree by --->
+<!---  - Splitting a current leaf into two new leaves (.ude-colour[**grow**]), --->
+<!---  - Collapsing adjacent leaves back into a single leaf (.ude-colour[**prune**]), --->
+<!---  - Reassigning the decision rule attached to an interior node (.ude-colour[**change**]), or,  --->
+<!---  - Swapping the decision rules assigned to two interior nodes (.ude-colour[**swap**]). --->
+
+<!--- - Basic sampler is readily embedded into larger Metropolis-within-Gibbs MCMC algorithms for more complicated models. --->
+<!---  - Each $(T_j, M_j)$ pair is updated in turn, conditioning on $\sigma$ and the remaining trees and their associated parameters. --->
+<!---  - Partially collapsed Metropolis-within-Gibbs MCMC sampler, an instance of Bayesian backfitting. --->
+
+<!--- ## Bayesian Additiv Regression Trees (BART) &mdash; V --->
+<!--- ### Estimators --->
+
+<!--- - Conditional average treatment effect --->
+<!---    $$\displaystyle \text{CATE} = \dfrac{1}{n} \sum_{i = 1}^{n} \mathbb{E} \left(Y_i (1)|X_i\right) - \left(Y_i(0)|X_i\right) = \dfrac{1}{n} \sum_{i = 1}^{n} f\left(1, x_i\right) - \left(0, x_i\right).$$ --->
+
+<!--- - Conditional average treatment effect of the treated --->
+<!---     $$\displaystyle \text{CATT} = \dfrac{1}{n_t} \sum_{i = 1:Z_i = 1} \mathbb{E} \left(Y_i (1)|X_i\right) - \mathbb{E} \left(Y_i(0)|X_i\right) = \dfrac{1}{n_t} \sum_{i = 1: Z_i} f\left(1, x_i\right) - f\left(0, x_i\right).$$ --->
+
+<!--- - In general: --->
+<!---    - $c(x,f) \equiv f\left(1, x_i\right) - f\left(0, x_i\right)$ defines the treatment effect at $X = x$ --->
+
+
+<!--- ## Bayesian Additiv Regression Trees (BART) &mdash; VI --->
+<!--- ### Inference --->
+
+<!--- - Joint posterior distribution of $C (f) = \big( c(x_1, f), c(x_2, f), \ldots, c(x_k, f) \big)$ --->
+<!--- - Each BART-MCMC iteration gives a new draw $l$ of $f$ from the posterior distribution. --->
+<!--- - For every draw, we obtain a draw from the joint posterior of $C(f): C^l = C\left(f^l\right)$. --->
+
+<!--- .blockquote[ --->
+<!--- ### Example --->
+<!--- - CATE: For a set of covariates $\left\{x_i \right\}_1^K$, compute the average of the vector $C^l$ at each $l$ by $$\displaystyle \bar{C}^l = \dfrac{1}{K}\sum_{i = 1}^{K} c \left(x_i, f^l \right).$$ --->
+<!--- - Credibility intervals can be computed from the marginal posterior distribution by taking the respective quantiles of the set of draws $c \left(x_i, f^l \right)$. --->
+<!--- ] --->
+```
+  
+
+---
+class: appendix
+
+## Shrinkage Bayesian Additiv Regression Trees (SBART) &mdash; IV
+### Regularization Prior
+
+- The joint distribution of the trees, $T_j$,  the means in the leaves, $\mu_j$, and the residual standard deviation, $\sigma$, can be factored and simplified by independence assumptions such that we are left with specifying priors for 
+  - The trees $p(T_j)$,
+  - The leaf node parameters $p(\mu_j | T_j )$,
+  - The splitting probabilities $p(s_j)$,
+  - And the error standard deviation $p(\sigma)$.
+
+--
+
+.blockquote[
+How do we specify those priors?   
+]
+
+- SBART offers established default specifications. Regularization priors constrain the size and fit of each $(T_j, M_j)$ so that each each tree contributes only a small part to the overall fit. It strongly favors weak learners, trees that are small with leaf parameters that are close to zero.
+
+---
+class: appendix
+
+## Shrinkage Bayesian Additiv Regression Trees (SBART) &mdash; V
+### Default prior specifications &mdash; I
+
+- $p(T_j)$: each tree is assigned an independent prior with probability that a node at depth $d$ splits by 
+$$
+\alpha (1 + d)^{-\beta}, \quad \alpha \in (0,1), \quad \beta \in [0, \infty).
+$$
+Default values: $\alpha=0.95, \beta=2$ (sets the probability of a tree with 1,
+2, 3, 4, and over 5 terminal nodes at 0.05, 0.55, 0.28, 0.09, and 0.03, respectively).
+
+
+- $p(\mu_j | T_j )$: we scale the response to lie between $-0.5$ and $0.5$ and use 
+$$\mu_{j} \overset{\text{i.i.d.}}{\sim} N(0, \sigma_{\mu}^2), \quad \text{where} \quad \sigma_{\mu} = \frac{0.5}{k\sqrt{m}}.$$
+Then, $k$ is the number of prior standard deviations between 0 and 0.5. With default value $k = 2$,
+we assign a $95\%$ prior probability that $\mathbb{E}\left[Y | x\right]$ lies between $-0.5$ and $0.5$.
+
+---
+class: appendix
+
+## Shrinkage Bayesian Additiv Regression Trees (SBART) &mdash; VI
+### Default prior specifications &mdash; II
+
+
+- $p(s)$: a Drichlet prior is assigned to each variable $j$
+  
+  $$s = \left(s_1, \ldots , s_p \right) \sim \text{Drichlet} \left(\dfrac{\alpha}{P}, \ldots, \dfrac{\alpha}{P}\right)$$
+    - $\alpha$ controlls the *unknown* sparisity; additional prior for $\alpha$
+        $$\dfrac{\alpha}{\alpha + \rho} \sim \text{Beta}\left(a, b\right) $$
+        - with default values $(a, b, \rho) = (0.5, 1, P)$
+
+- $p(\sigma)$: inverse chi-squared distributed and calibrated to observed data in relation to OLS-variance.
+
+???
+- $\alpha = 0.5$ makes the prior heavy near zero $\rightarrow$ encourages sparsity
+- $b = 1$ keeps it relatively noninformative on the upper end
+- $\rho = P$ scales the prior so that the effective sparsity control adapts to the number of predictors
+
+```{r include = FALSE, eval = FALSE}
+<!-- ## Simulation study &mdash; I -->
+<!-- ### Setup -->
+
+<!-- - Simulated data based on Infant Health and Development Program experiment -->
+<!-- - Two Settings -->
+<!--   - overlap &mdash; CATT -->
+<!--   - incomplete overlap &mdash; CATC<sup>2</sup> -->
+<!-- -  $25$ covariates -->
+<!--   - $6$ continuous -->
+<!--   - $19$ binary -->
+<!-- - Response surface is simulated -->
+
+
+
+<!-- .footnote[ -->
+<!-- [2] The incomplete overlap comes from the fact that the data for childeren of nonwhite mothers were discard. Conditional average treatment effect on the controls $\sum_{i:Z_i = 0} \mathbb{E} \left( Y_i(1) - Y_i(0) \ | \ X_i \right)$. -->
+<!-- ] -->
+
+<!-- --- -->
+
+<!-- ## Simulation &mdash; II -->
+<!-- ### Setup -->
+
+<!-- #### Surface A -->
+<!-- - $Y(0) \sim N(X \beta_A, 1)$ -->
+<!-- - $Y(1) \sim N(X \beta_A + 4, 1)$ -->
+<!--     - $\beta_A$ (for $Y(0)$ and $Y(1)$) is a coefficient vector with length $p = 25$ and the values are randomly sampled from $0, 1, 2, 3, 4$ with probabilities $0.5, 0.2, 0.15, 0.1, 0.05$ -->
+
+<!-- - No heterogeneity and linear treatment effect ideal for OLS and propensity-score-based methods -->
+
+<!-- --- -->
+<!-- ## Simulation &mdash; III -->
+<!-- #### Surface B -->
+<!-- - $Y(0) \sim N(exp((X + W)\beta_B), 1)$ -->
+<!--   - $W$ is an offset matrix with every value equal to $0.5$ and same dimension as $X$ -->
+<!-- - $Y(1) \sim N(X\beta_B -\omega_B^s, 1)$ -->
+<!--     - $\beta_B$ is a coefficient vector with length $p = 25$ and the values are randomly sampled from $0, .1, .2, .3, .4$ with probabilities $0.6, 0.1, 0.1, 0.1, 0.1$ -->
+
+
+<!-- --- -->
+<!-- ## Simulation &mdash; IV -->
+<!-- #### Results &mdash;  Surface A (linear case) -->
+
+
+<!-- ```{r, echo = FALSE, fig.align="center", out.width = "60%"} -->
+<!-- knitr::include_graphics('graphics/figure_3_clean.png', auto_pdf = FALSE) -->
+
+<!-- ``` -->
+
+
+
+<!-- --- -->
+<!-- ## Simulation &mdash; V -->
+<!-- #### Results &mdash;  Surface B (nonlinear case) -->
+
+
+<!-- ```{r, echo = FALSE, fig.align="center", out.width = "60%", eval = FALSE} -->
+<!-- knitr::include_graphics('graphics/figure_4_clean.png', auto_pdf = FALSE) -->
+
+<!-- ``` -->
+
+
+<!-- --- -->
