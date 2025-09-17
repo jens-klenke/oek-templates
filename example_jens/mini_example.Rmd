@@ -44,7 +44,7 @@ BibOptions(check.entries = FALSE,
 myBib <- ReadBib("assets/bib.bib", check = FALSE)
 
 # packages
-source(here::here('06_presentation/assets/packages.R'))
+source(here::here('example_jens/assets/packages.R'))
 
 # load functions
 # source all files in the functions folder
@@ -52,7 +52,7 @@ invisible(sapply(list.files(here::here('01_code/functions'), full.names = TRUE),
                  source))
 
 # load data
-load(here::here('06_presentation/data/data_uncorr_0.75_n1000.RData'))
+# load(here::here('example_jens/data/data_uncorr_0.75_n1000.RData'))
 ```
 
 ```{r xaringanExtra_progress-bar, echo = FALSE}
@@ -187,7 +187,7 @@ We can say that \(X\) **causes** \(Y\) if, were we to intervene and change the v
 ]
 
 ```{r IV_DAG, echo=F, cache=F, fig.height=1, fig.cap="<b>Figure 1:</b> Directed acyclic graph (DAG) illustrating an instrumental variable setting. Source: Author’s illustration.", fig.align='center'}
-m <- DiagrammeR::grViz(here::here("06_presentation/032025_DCC_Aachen/assets/Treatment_Outcome_pg3_own.dot"), height = 150, width = "100%")
+m <- DiagrammeR::grViz(here::here("example_jens/assets/Treatment_Outcome_pg3_own.dot"), height = 150, width = "100%")
 widgetframe::frameableWidget(m)
 ```
 
@@ -462,8 +462,8 @@ How does SoftBART differ from BART?
 <br>
 
 ```{r, echo=FALSE,out.width="50%",fig.cap="<b>Figure 3:</b> Left panel: hard decision rules in BART. Right panel: smoothness-inducing decision rules in SoftBART. Source: Linero (2022).",fig.show='hold', fig.align='center'}
-knitr::include_graphics(here::here("06_presentation/032025_DCC_Aachen/graphics/smoothness_1.png"))
-knitr::include_graphics(here::here("06_presentation/032025_DCC_Aachen/graphics/smoothness_2.png"))
+# knitr::include_graphics(here::here("06_presentation/032025_DCC_Aachen/graphics/smoothness_1.png"))
+# knitr::include_graphics(here::here("06_presentation/032025_DCC_Aachen/graphics/smoothness_2.png"))
 ``` 
 
 ---
@@ -568,7 +568,7 @@ name: metrics-figure
 .panel[.panel-name[MSE]
 
 ```{r MSE, echo = FALSE, message=FALSE, fig.align='center', fig.cap='<b>Figure 4:</b> MSE of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\); no systematic differences in estimation quality detected between the subgroups.', out.width='60%', fig.pos='H', escape = FALSE, dpi = 600}
-knitr::include_graphics(here::here("06_presentation/graphics/mse_plot_uncorr_0.75_n10001.png"))
+# knitr::include_graphics(here::here("06_presentation/graphics/mse_plot_uncorr_0.75_n10001.png"))
 # Mentioning under compliance?
 ```
 
@@ -577,7 +577,7 @@ knitr::include_graphics(here::here("06_presentation/graphics/mse_plot_uncorr_0.7
 .panel[.panel-name[Bias]
 
 ```{r Bias, echo = FALSE, message=FALSE, fig.align='center', fig.cap=' <b>Figure 5:</b> Bias and absolute Bias of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\); no systematic differences in estimation quality detected between the subgroups.', out.width='60%', fig.pos='H', escape = FALSE, dpi = 600}
-knitr::include_graphics(here::here("06_presentation/graphics/bias_plot_uncorr_0.75_n10001.png"))
+# knitr::include_graphics(here::here("06_presentation/graphics/bias_plot_uncorr_0.75_n10001.png"))
 ```
 
 ]
@@ -585,7 +585,7 @@ knitr::include_graphics(here::here("06_presentation/graphics/bias_plot_uncorr_0.
 .panel[.panel-name[Coverage]
 
 ```{r Coverage, echo = FALSE, message=FALSE, fig.align='center', fig.cap=' <b>Figure 6:</b> Coverage of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\); no systematic differences in estimation quality detected between the subgroups.', out.width='60%', fig.pos='H', escape = FALSE, dpi = 600}
-knitr::include_graphics(here::here("06_presentation/graphics/coverage_plot_uncorr_0.75_n10001.png"))
+# knitr::include_graphics(here::here("06_presentation/graphics/coverage_plot_uncorr_0.75_n10001.png"))
 
 ```
 ]
@@ -597,7 +597,7 @@ knitr::include_graphics(here::here("06_presentation/graphics/coverage_plot_uncor
 
 
 ```{r rule_dis, echo = FALSE, message=FALSE, fig.align='center', fig.cap='<b>Figure 7:</b> Detection rate of subgroups \\(l_1\\) and \\(l_2\\) and false detection rate over \\(500\\) MCMC runs; no systematic differences for the subgroups. Detection is assessed separately for each subgroup, irrespective of significance, whereas the false detection rate is defined at the replicate level, with a single significant false positive sufficient to flag the replicate.', out.width='70%', fig.pos='H', escape = FALSE, dpi = 600}
-knitr::include_graphics(here::here("06_presentation/graphics/rule_discovery_plot_uncorr_0.75_n10001.png"), auto_pdf = FALSE)
+# knitr::include_graphics(here::here("06_presentation/graphics/rule_discovery_plot_uncorr_0.75_n10001.png"), auto_pdf = FALSE)
 ```
 
 ---
@@ -624,14 +624,14 @@ knitr::include_graphics(here::here("06_presentation/graphics/rule_discovery_plot
 ## OHIE  &mdash; V
 
 ```{r OHIE_results1, echo = FALSE, message=FALSE, fig.align='center', fig.cap='<b> Figure 8:</b> Hetergenous treatment effect estimation for the OHIE program.', out.width="90%", fig.pos='H'}
-knitr::include_graphics(here::here('06_presentation/graphics/tree_OHIE1.png'), auto_pdf = FALSE)
+# knitr::include_graphics(here::here('06_presentation/graphics/tree_OHIE1.png'), auto_pdf = FALSE)
 ```
 
 ---
 ## OHIE  &mdash; V
 
 ```{r OHIE_results1_high, echo = FALSE, message=FALSE, fig.align='center', fig.cap='<b> Figure 8:</b> Hetergenous treatment effect estimation for the OHIE program.', out.width="90%", fig.pos='H'}
-knitr::include_graphics(here::here('06_presentation/graphics/tree_OHIE_high1.png'), auto_pdf = FALSE)
+# knitr::include_graphics(here::here('06_presentation/graphics/tree_OHIE_high1.png'), auto_pdf = FALSE)
 ```
 
 ???
@@ -714,7 +714,7 @@ name: iv-assumption
 ```{r, echo=FALSE, out.width="80%", fig.cap="<b>Figure 2:</b> Left panel: binary tree fit. Right panel: single-tree fits (solid lines) and BART fits (dashed line). Source: Hill (2011).", fig.align='center', eval = TRUE}
 
 NoCite(myBib, key = "hill_bayesian_2011")
-knitr::include_graphics(here::here("06_presentation/graphics/figure_2_clean.png"))
+# knitr::include_graphics(here::here("06_presentation/graphics/figure_2_clean.png"))
 ```
 
 `r NoCite(myBib, key = "hill_bayesian_2011")`
@@ -739,47 +739,47 @@ name: metrics-table
 
 ```{r apendix_performance_table_p10, echo = FALSE, message=FALSE, out.width="35%", escape = FALSE, results='asis'}
 # html table
-subgroup_metrics %>%
-  pivot_longer(
-    cols = matches("_(mean|sd)$"),
-    names_to = c("metric", "stat"),
-    names_pattern = "^(.*)_(mean|sd)$",
-    values_to = "val"
-  ) %>%
-  pivot_wider(names_from = stat, values_from = val) %>%
-  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
-  dplyr::select(-mean, -sd) %>%
-  pivot_wider(names_from = metric, values_from = cell) %>%
-  tidyr::pivot_wider(
-    id_cols = c(ncov, effect),
-    names_from = model,
-    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
-    names_glue = "{model}.{.value}"
-  ) %>%
-  # sorting
-  dplyr::select(ncov, effect,
-                starts_with("bcf_iv"),
-                starts_with("sbcf_iv")) %>%
-  dplyr::mutate(
-    spacing_col_0 = " ",
-    spacing_col_1 = " ") %>% # empty columns for spacing
-  dplyr::relocate(spacing_col_0, .after = effect) %>%
-  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
-  dplyr::filter(ncov == 10) %>%
-  dplyr::select(-ncov) %>%
-  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
-               col.names = c('\\(k\\)', '',
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
-               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
-               caption= '<b>Table 1:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\) in a setting with \\(10\\) covariates; no systematic differences in estimation quality detected between the subgroups. <br> \\(\\)') %>%
-  kableExtra::column_spec(2, width = '1cm') %>%
-  kableExtra::column_spec(7, width = '1cm') %>%
-  kable_classic(full_width = F) %>%
-  column_spec(8:11, background = c(rep('white', 4), rep('#90ee90', 7))) %>%
-  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
-  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
-  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+# subgroup_metrics %>%
+#   pivot_longer(
+#     cols = matches("_(mean|sd)$"),
+#     names_to = c("metric", "stat"),
+#     names_pattern = "^(.*)_(mean|sd)$",
+#     values_to = "val"
+#   ) %>%
+#   pivot_wider(names_from = stat, values_from = val) %>%
+#   mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+#   dplyr::select(-mean, -sd) %>%
+#   pivot_wider(names_from = metric, values_from = cell) %>%
+#   tidyr::pivot_wider(
+#     id_cols = c(ncov, effect),
+#     names_from = model,
+#     values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+#     names_glue = "{model}.{.value}"
+#   ) %>%
+#   # sorting
+#   dplyr::select(ncov, effect,
+#                 starts_with("bcf_iv"),
+#                 starts_with("sbcf_iv")) %>%
+#   dplyr::mutate(
+#     spacing_col_0 = " ",
+#     spacing_col_1 = " ") %>% # empty columns for spacing
+#   dplyr::relocate(spacing_col_0, .after = effect) %>%
+#   dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+#   dplyr::filter(ncov == 10) %>%
+#   dplyr::select(-ncov) %>%
+#   knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+#                col.names = c('\\(k\\)', '',
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+#                escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+#                caption= '<b>Table 1:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\) in a setting with \\(10\\) covariates; no systematic differences in estimation quality detected between the subgroups. <br> \\(\\)') %>%
+#   kableExtra::column_spec(2, width = '1cm') %>%
+#   kableExtra::column_spec(7, width = '1cm') %>%
+#   kable_classic(full_width = F) %>%
+#   column_spec(8:11, background = c(rep('white', 4), rep('#90ee90', 7))) %>%
+#   collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+#   kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+#   kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
 ```
 ]
 
@@ -787,47 +787,47 @@ subgroup_metrics %>%
 
 ```{r apendix_performance_table_p50, echo = FALSE, message=FALSE, out.width="40%", escape = FALSE, results='asis'}
 # html table
-subgroup_metrics %>%
-  pivot_longer(
-    cols = matches("_(mean|sd)$"),
-    names_to = c("metric", "stat"),
-    names_pattern = "^(.*)_(mean|sd)$",
-    values_to = "val"
-  ) %>%
-  pivot_wider(names_from = stat, values_from = val) %>%
-  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
-  dplyr::select(-mean, -sd) %>%
-  pivot_wider(names_from = metric, values_from = cell) %>%
-  tidyr::pivot_wider(
-    id_cols = c(ncov, effect),
-    names_from = model,
-    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
-    names_glue = "{model}.{.value}"
-  ) %>%
-  # sorting
-  dplyr::select(ncov, effect,
-                starts_with("bcf_iv"),
-                starts_with("sbcf_iv")) %>%
-  dplyr::mutate(
-    spacing_col_0 = " ",
-    spacing_col_1 = " ") %>% # empty columns for spacing
-  dplyr::relocate(spacing_col_0, .after = effect) %>%
-  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
-  dplyr::filter(ncov == 50) %>%
-  dplyr::select(-ncov) %>%
-  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
-               col.names = c('\\(k\\)', '',
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
-               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
-               caption= '<b>Table 2:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\) in a setting with \\(50\\) covariates; no systematic differences in estimation quality detected between the subgroups. <br> \\(\\)') %>%
-  kableExtra::column_spec(2, width = '1cm') %>%
-  kableExtra::column_spec(7, width = '1cm') %>%
-  kable_classic(full_width = F) %>%
-  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
-  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
-  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
-  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+# subgroup_metrics %>%
+#   pivot_longer(
+#     cols = matches("_(mean|sd)$"),
+#     names_to = c("metric", "stat"),
+#     names_pattern = "^(.*)_(mean|sd)$",
+#     values_to = "val"
+#   ) %>%
+#   pivot_wider(names_from = stat, values_from = val) %>%
+#   mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+#   dplyr::select(-mean, -sd) %>%
+#   pivot_wider(names_from = metric, values_from = cell) %>%
+#   tidyr::pivot_wider(
+#     id_cols = c(ncov, effect),
+#     names_from = model,
+#     values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+#     names_glue = "{model}.{.value}"
+#   ) %>%
+#   # sorting
+#   dplyr::select(ncov, effect,
+#                 starts_with("bcf_iv"),
+#                 starts_with("sbcf_iv")) %>%
+#   dplyr::mutate(
+#     spacing_col_0 = " ",
+#     spacing_col_1 = " ") %>% # empty columns for spacing
+#   dplyr::relocate(spacing_col_0, .after = effect) %>%
+#   dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+#   dplyr::filter(ncov == 50) %>%
+#   dplyr::select(-ncov) %>%
+#   knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+#                col.names = c('\\(k\\)', '',
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+#                escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+#                caption= '<b>Table 2:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\) in a setting with \\(50\\) covariates; no systematic differences in estimation quality detected between the subgroups. <br> \\(\\)') %>%
+#   kableExtra::column_spec(2, width = '1cm') %>%
+#   kableExtra::column_spec(7, width = '1cm') %>%
+#   kable_classic(full_width = F) %>%
+#   column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+#   collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+#   kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+#   kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
 ```
 ]
 
@@ -836,47 +836,47 @@ subgroup_metrics %>%
 ```{r apendix_performance_table_p100, echo = FALSE, message=FALSE, out.width="50%", escape = FALSE, results='asis'}
 # html table
 # html table
-subgroup_metrics %>%
-  pivot_longer(
-    cols = matches("_(mean|sd)$"),
-    names_to = c("metric", "stat"),
-    names_pattern = "^(.*)_(mean|sd)$",
-    values_to = "val"
-  ) %>%
-  pivot_wider(names_from = stat, values_from = val) %>%
-  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
-  dplyr::select(-mean, -sd) %>%
-  pivot_wider(names_from = metric, values_from = cell) %>%
-  tidyr::pivot_wider(
-    id_cols = c(ncov, effect),
-    names_from = model,
-    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
-    names_glue = "{model}.{.value}"
-  ) %>%
-  # sorting
-  dplyr::select(ncov, effect,
-                starts_with("bcf_iv"),
-                starts_with("sbcf_iv")) %>%
-  dplyr::mutate(
-    spacing_col_0 = " ",
-    spacing_col_1 = " ") %>% # empty columns for spacing
-  dplyr::relocate(spacing_col_0, .after = effect) %>%
-  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
-  dplyr::filter(ncov == 100) %>%
-  dplyr::select(-ncov) %>%
-  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
-               col.names = c('\\(k\\)', '',
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
-               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
-               caption= '<b>Table 3:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\) in a setting with \\(100\\) covariates; no systematic differences in estimation quality detected between the subgroups. <br> \\(\\)') %>%
-  kableExtra::column_spec(2, width = '1cm') %>%
-  kableExtra::column_spec(7, width = '1cm') %>%
-  kable_classic(full_width = F) %>%
-  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
-  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
-  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
-  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+# subgroup_metrics %>%
+#   pivot_longer(
+#     cols = matches("_(mean|sd)$"),
+#     names_to = c("metric", "stat"),
+#     names_pattern = "^(.*)_(mean|sd)$",
+#     values_to = "val"
+#   ) %>%
+#   pivot_wider(names_from = stat, values_from = val) %>%
+#   mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+#   dplyr::select(-mean, -sd) %>%
+#   pivot_wider(names_from = metric, values_from = cell) %>%
+#   tidyr::pivot_wider(
+#     id_cols = c(ncov, effect),
+#     names_from = model,
+#     values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+#     names_glue = "{model}.{.value}"
+#   ) %>%
+#   # sorting
+#   dplyr::select(ncov, effect,
+#                 starts_with("bcf_iv"),
+#                 starts_with("sbcf_iv")) %>%
+#   dplyr::mutate(
+#     spacing_col_0 = " ",
+#     spacing_col_1 = " ") %>% # empty columns for spacing
+#   dplyr::relocate(spacing_col_0, .after = effect) %>%
+#   dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+#   dplyr::filter(ncov == 100) %>%
+#   dplyr::select(-ncov) %>%
+#   knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+#                col.names = c('\\(k\\)', '',
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+#                escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+#                caption= '<b>Table 3:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroups \\(l_1\\) and \\(l_2\\) in a setting with \\(100\\) covariates; no systematic differences in estimation quality detected between the subgroups. <br> \\(\\)') %>%
+#   kableExtra::column_spec(2, width = '1cm') %>%
+#   kableExtra::column_spec(7, width = '1cm') %>%
+#   kable_classic(full_width = F) %>%
+#   column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+#   collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+#   kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+#   kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
 ```
 ]
 
@@ -902,49 +902,49 @@ class: appendix
 
 ```{r apendix_performance_table_l1_p10, echo = FALSE, message=FALSE, out.width="35%", escape = FALSE, results='asis'}
 # html table
-subgroup_sep_metrics %>%
-  dplyr::filter(real_subgroup == 'pos') %>%
-  dplyr::select(-real_subgroup) %>%
-  pivot_longer(
-  cols = matches("_(mean|sd)$"),
-  names_to = c("metric", "stat"),
-  names_pattern = "^(.*)_(mean|sd)$",
-  values_to = "val"
-) %>%
-  pivot_wider(names_from = stat, values_from = val) %>%
-  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
-  dplyr::select(-mean, -sd) %>%
-  pivot_wider(names_from = metric, values_from = cell) %>%
-  tidyr::pivot_wider(
-    id_cols = c(ncov, effect),
-    names_from = model,
-    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
-    names_glue = "{model}.{.value}"
-  ) %>%
-  # sorting
-  dplyr::select(ncov, effect,
-                starts_with("bcf_iv"),
-                starts_with("sbcf_iv")) %>%
-  dplyr::mutate(
-    spacing_col_0 = " ",
-    spacing_col_1 = " ") %>% # empty columns for spacing
-  dplyr::relocate(spacing_col_0, .after = effect) %>%
-  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
-  dplyr::filter(ncov == 10) %>%
-  dplyr::select(-ncov) %>%
-  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
-               col.names = c('\\(k\\)', '',
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
-               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
-               caption= '<b>Table 4:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_1\\) in a setting with \\(10\\) covariates.<br> \\(\\)') %>%
-  kableExtra::column_spec(2, width = '1cm') %>%
-  kableExtra::column_spec(7, width = '1cm') %>%
-  kable_classic(full_width = F) %>%
-  column_spec(8:11, background = c(rep('white', 4), rep('#90ee90', 7))) %>%
-  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
-  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
-  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+# subgroup_sep_metrics %>%
+#   dplyr::filter(real_subgroup == 'pos') %>%
+#   dplyr::select(-real_subgroup) %>%
+#   pivot_longer(
+#   cols = matches("_(mean|sd)$"),
+#   names_to = c("metric", "stat"),
+#   names_pattern = "^(.*)_(mean|sd)$",
+#   values_to = "val"
+# ) %>%
+#   pivot_wider(names_from = stat, values_from = val) %>%
+#   mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+#   dplyr::select(-mean, -sd) %>%
+#   pivot_wider(names_from = metric, values_from = cell) %>%
+#   tidyr::pivot_wider(
+#     id_cols = c(ncov, effect),
+#     names_from = model,
+#     values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+#     names_glue = "{model}.{.value}"
+#   ) %>%
+#   # sorting
+#   dplyr::select(ncov, effect,
+#                 starts_with("bcf_iv"),
+#                 starts_with("sbcf_iv")) %>%
+#   dplyr::mutate(
+#     spacing_col_0 = " ",
+#     spacing_col_1 = " ") %>% # empty columns for spacing
+#   dplyr::relocate(spacing_col_0, .after = effect) %>%
+#   dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+#   dplyr::filter(ncov == 10) %>%
+#   dplyr::select(-ncov) %>%
+#   knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+#                col.names = c('\\(k\\)', '',
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+#                escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+#                caption= '<b>Table 4:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_1\\) in a setting with \\(10\\) covariates.<br> \\(\\)') %>%
+#   kableExtra::column_spec(2, width = '1cm') %>%
+#   kableExtra::column_spec(7, width = '1cm') %>%
+#   kable_classic(full_width = F) %>%
+#   column_spec(8:11, background = c(rep('white', 4), rep('#90ee90', 7))) %>%
+#   collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+#   kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+#   kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
 ```
 ]
 
@@ -952,49 +952,49 @@ subgroup_sep_metrics %>%
 
 ```{r apendix_performance_table_l1_p50, echo = FALSE, message=FALSE, out.width="40%", escape = FALSE, results='asis'}
 # html table
-subgroup_sep_metrics %>%
-  dplyr::filter(real_subgroup == 'pos') %>%
-  dplyr::select(-real_subgroup) %>%
-  pivot_longer(
-  cols = matches("_(mean|sd)$"),
-  names_to = c("metric", "stat"),
-  names_pattern = "^(.*)_(mean|sd)$",
-  values_to = "val"
-) %>%
-  pivot_wider(names_from = stat, values_from = val) %>%
-  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
-  dplyr::select(-mean, -sd) %>%
-  pivot_wider(names_from = metric, values_from = cell) %>%
-  tidyr::pivot_wider(
-    id_cols = c(ncov, effect),
-    names_from = model,
-    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
-    names_glue = "{model}.{.value}"
-  ) %>%
-  # sorting
-  dplyr::select(ncov, effect,
-                starts_with("bcf_iv"),
-                starts_with("sbcf_iv")) %>%
-  dplyr::mutate(
-    spacing_col_0 = " ",
-    spacing_col_1 = " ") %>% # empty columns for spacing
-  dplyr::relocate(spacing_col_0, .after = effect) %>%
-  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
-  dplyr::filter(ncov == 50) %>%
-  dplyr::select(-ncov) %>%
-  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
-               col.names = c('\\(k\\)', '',
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
-               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
-               caption= '<b>Table 5:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_1\\) in a setting with \\(50\\) covariates.<br> \\(\\)') %>%
-  kableExtra::column_spec(2, width = '1cm') %>%
-  kableExtra::column_spec(7, width = '1cm') %>%
-  kable_classic(full_width = F) %>%
-  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
-  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
-  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
-  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+# subgroup_sep_metrics %>%
+#   dplyr::filter(real_subgroup == 'pos') %>%
+#   dplyr::select(-real_subgroup) %>%
+#   pivot_longer(
+#   cols = matches("_(mean|sd)$"),
+#   names_to = c("metric", "stat"),
+#   names_pattern = "^(.*)_(mean|sd)$",
+#   values_to = "val"
+# ) %>%
+#   pivot_wider(names_from = stat, values_from = val) %>%
+#   mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+#   dplyr::select(-mean, -sd) %>%
+#   pivot_wider(names_from = metric, values_from = cell) %>%
+#   tidyr::pivot_wider(
+#     id_cols = c(ncov, effect),
+#     names_from = model,
+#     values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+#     names_glue = "{model}.{.value}"
+#   ) %>%
+#   # sorting
+#   dplyr::select(ncov, effect,
+#                 starts_with("bcf_iv"),
+#                 starts_with("sbcf_iv")) %>%
+#   dplyr::mutate(
+#     spacing_col_0 = " ",
+#     spacing_col_1 = " ") %>% # empty columns for spacing
+#   dplyr::relocate(spacing_col_0, .after = effect) %>%
+#   dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+#   dplyr::filter(ncov == 50) %>%
+#   dplyr::select(-ncov) %>%
+#   knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+#                col.names = c('\\(k\\)', '',
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+#                escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+#                caption= '<b>Table 5:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_1\\) in a setting with \\(50\\) covariates.<br> \\(\\)') %>%
+#   kableExtra::column_spec(2, width = '1cm') %>%
+#   kableExtra::column_spec(7, width = '1cm') %>%
+#   kable_classic(full_width = F) %>%
+#   column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+#   collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+#   kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+#   kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
 ```
 ]
 
@@ -1002,49 +1002,49 @@ subgroup_sep_metrics %>%
 
 ```{r apendix_performance_table_l1_p100, echo = FALSE, message=FALSE, out.width="50%", escape = FALSE, results='asis'}
 # html table
-subgroup_sep_metrics %>%
-  dplyr::filter(real_subgroup == 'pos') %>%
-  dplyr::select(-real_subgroup) %>%
-  pivot_longer(
-  cols = matches("_(mean|sd)$"),
-  names_to = c("metric", "stat"),
-  names_pattern = "^(.*)_(mean|sd)$",
-  values_to = "val"
-) %>%
-  pivot_wider(names_from = stat, values_from = val) %>%
-  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
-  dplyr::select(-mean, -sd) %>%
-  pivot_wider(names_from = metric, values_from = cell) %>%
-  tidyr::pivot_wider(
-    id_cols = c(ncov, effect),
-    names_from = model,
-    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
-    names_glue = "{model}.{.value}"
-  ) %>%
-  # sorting
-  dplyr::select(ncov, effect,
-                starts_with("bcf_iv"),
-                starts_with("sbcf_iv")) %>%
-  dplyr::mutate(
-    spacing_col_0 = " ",
-    spacing_col_1 = " ") %>% # empty columns for spacing
-  dplyr::relocate(spacing_col_0, .after = effect) %>%
-  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
-  dplyr::filter(ncov == 100) %>%
-  dplyr::select(-ncov) %>%
-  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
-               col.names = c('\\(k\\)', '',
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
-               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
-               caption= '<b>Table 6:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_1\\) in a setting with \\(100\\) covariates.<br> \\(\\)') %>%
-  kableExtra::column_spec(2, width = '1cm') %>%
-  kableExtra::column_spec(7, width = '1cm') %>%
-  kable_classic(full_width = F) %>%
-  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
-  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
-  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
-  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+# subgroup_sep_metrics %>%
+#   dplyr::filter(real_subgroup == 'pos') %>%
+#   dplyr::select(-real_subgroup) %>%
+#   pivot_longer(
+#   cols = matches("_(mean|sd)$"),
+#   names_to = c("metric", "stat"),
+#   names_pattern = "^(.*)_(mean|sd)$",
+#   values_to = "val"
+# ) %>%
+#   pivot_wider(names_from = stat, values_from = val) %>%
+#   mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+#   dplyr::select(-mean, -sd) %>%
+#   pivot_wider(names_from = metric, values_from = cell) %>%
+#   tidyr::pivot_wider(
+#     id_cols = c(ncov, effect),
+#     names_from = model,
+#     values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+#     names_glue = "{model}.{.value}"
+#   ) %>%
+#   # sorting
+#   dplyr::select(ncov, effect,
+#                 starts_with("bcf_iv"),
+#                 starts_with("sbcf_iv")) %>%
+#   dplyr::mutate(
+#     spacing_col_0 = " ",
+#     spacing_col_1 = " ") %>% # empty columns for spacing
+#   dplyr::relocate(spacing_col_0, .after = effect) %>%
+#   dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+#   dplyr::filter(ncov == 100) %>%
+#   dplyr::select(-ncov) %>%
+#   knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+#                col.names = c('\\(k\\)', '',
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+#                escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+#                caption= '<b>Table 6:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_1\\) in a setting with \\(100\\) covariates.<br> \\(\\)') %>%
+#   kableExtra::column_spec(2, width = '1cm') %>%
+#   kableExtra::column_spec(7, width = '1cm') %>%
+#   kable_classic(full_width = F) %>%
+#   column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+#   collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+#   kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+#   kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
 ```
 ]
 
@@ -1070,49 +1070,49 @@ class: appendix
 
 ```{r apendix_performance_table_l2_p10, echo = FALSE, message=FALSE, out.width="35%", escape = FALSE, results='asis'}
 # html table
-subgroup_sep_metrics %>%
-  dplyr::filter(real_subgroup == 'neg') %>%
-  dplyr::select(-real_subgroup) %>%
-  pivot_longer(
-  cols = matches("_(mean|sd)$"),
-  names_to = c("metric", "stat"),
-  names_pattern = "^(.*)_(mean|sd)$",
-  values_to = "val"
-) %>%
-  pivot_wider(names_from = stat, values_from = val) %>%
-  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
-  dplyr::select(-mean, -sd) %>%
-  pivot_wider(names_from = metric, values_from = cell) %>%
-  tidyr::pivot_wider(
-    id_cols = c(ncov, effect),
-    names_from = model,
-    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
-    names_glue = "{model}.{.value}"
-  ) %>%
-  # sorting
-  dplyr::select(ncov, effect,
-                starts_with("bcf_iv"),
-                starts_with("sbcf_iv")) %>%
-  dplyr::mutate(
-    spacing_col_0 = " ",
-    spacing_col_1 = " ") %>% # empty columns for spacing
-  dplyr::relocate(spacing_col_0, .after = effect) %>%
-  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
-  dplyr::filter(ncov == 10) %>%
-  dplyr::select(-ncov) %>%
-  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
-               col.names = c('\\(k\\)', '',
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
-               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
-               caption= '<b>Table 7:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_2\\) in a setting with \\(10\\) covariates.<br> \\(\\)') %>%
-  kableExtra::column_spec(2, width = '1cm') %>%
-  kableExtra::column_spec(7, width = '1cm') %>%
-  kable_classic(full_width = F) %>%
-  column_spec(8:11, background = c(rep('white', 4), rep('#90ee90', 7))) %>%
-  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
-  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
-  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+# subgroup_sep_metrics %>%
+#   dplyr::filter(real_subgroup == 'neg') %>%
+#   dplyr::select(-real_subgroup) %>%
+#   pivot_longer(
+#   cols = matches("_(mean|sd)$"),
+#   names_to = c("metric", "stat"),
+#   names_pattern = "^(.*)_(mean|sd)$",
+#   values_to = "val"
+# ) %>%
+#   pivot_wider(names_from = stat, values_from = val) %>%
+#   mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+#   dplyr::select(-mean, -sd) %>%
+#   pivot_wider(names_from = metric, values_from = cell) %>%
+#   tidyr::pivot_wider(
+#     id_cols = c(ncov, effect),
+#     names_from = model,
+#     values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+#     names_glue = "{model}.{.value}"
+#   ) %>%
+#   # sorting
+#   dplyr::select(ncov, effect,
+#                 starts_with("bcf_iv"),
+#                 starts_with("sbcf_iv")) %>%
+#   dplyr::mutate(
+#     spacing_col_0 = " ",
+#     spacing_col_1 = " ") %>% # empty columns for spacing
+#   dplyr::relocate(spacing_col_0, .after = effect) %>%
+#   dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+#   dplyr::filter(ncov == 10) %>%
+#   dplyr::select(-ncov) %>%
+#   knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+#                col.names = c('\\(k\\)', '',
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+#                escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+#                caption= '<b>Table 7:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_2\\) in a setting with \\(10\\) covariates.<br> \\(\\)') %>%
+#   kableExtra::column_spec(2, width = '1cm') %>%
+#   kableExtra::column_spec(7, width = '1cm') %>%
+#   kable_classic(full_width = F) %>%
+#   column_spec(8:11, background = c(rep('white', 4), rep('#90ee90', 7))) %>%
+#   collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+#   kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+#   kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
 ```
 ]
 
@@ -1120,49 +1120,49 @@ subgroup_sep_metrics %>%
 
 ```{r apendix_performance_table_l2_p50, echo = FALSE, message=FALSE, out.width="40%", escape = FALSE, results='asis'}
 # html table
-subgroup_sep_metrics %>%
-  dplyr::filter(real_subgroup == 'neg') %>%
-  dplyr::select(-real_subgroup) %>%
-  pivot_longer(
-  cols = matches("_(mean|sd)$"),
-  names_to = c("metric", "stat"),
-  names_pattern = "^(.*)_(mean|sd)$",
-  values_to = "val"
-) %>%
-  pivot_wider(names_from = stat, values_from = val) %>%
-  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
-  dplyr::select(-mean, -sd) %>%
-  pivot_wider(names_from = metric, values_from = cell) %>%
-  tidyr::pivot_wider(
-    id_cols = c(ncov, effect),
-    names_from = model,
-    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
-    names_glue = "{model}.{.value}"
-  ) %>%
-  # sorting
-  dplyr::select(ncov, effect,
-                starts_with("bcf_iv"),
-                starts_with("sbcf_iv")) %>%
-  dplyr::mutate(
-    spacing_col_0 = " ",
-    spacing_col_1 = " ") %>% # empty columns for spacing
-  dplyr::relocate(spacing_col_0, .after = effect) %>%
-  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
-  dplyr::filter(ncov == 50) %>%
-  dplyr::select(-ncov) %>%
-  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
-               col.names = c('\\(k\\)', '',
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
-               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
-               caption= '<b>Table 8:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_2\\) in a setting with \\(50\\) covariates.<br> \\(\\)') %>%
-  kableExtra::column_spec(2, width = '1cm') %>%
-  kableExtra::column_spec(7, width = '1cm') %>%
-  kable_classic(full_width = F) %>%
-  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
-  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
-  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
-  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+# subgroup_sep_metrics %>%
+#   dplyr::filter(real_subgroup == 'neg') %>%
+#   dplyr::select(-real_subgroup) %>%
+#   pivot_longer(
+#   cols = matches("_(mean|sd)$"),
+#   names_to = c("metric", "stat"),
+#   names_pattern = "^(.*)_(mean|sd)$",
+#   values_to = "val"
+# ) %>%
+#   pivot_wider(names_from = stat, values_from = val) %>%
+#   mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+#   dplyr::select(-mean, -sd) %>%
+#   pivot_wider(names_from = metric, values_from = cell) %>%
+#   tidyr::pivot_wider(
+#     id_cols = c(ncov, effect),
+#     names_from = model,
+#     values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+#     names_glue = "{model}.{.value}"
+#   ) %>%
+#   # sorting
+#   dplyr::select(ncov, effect,
+#                 starts_with("bcf_iv"),
+#                 starts_with("sbcf_iv")) %>%
+#   dplyr::mutate(
+#     spacing_col_0 = " ",
+#     spacing_col_1 = " ") %>% # empty columns for spacing
+#   dplyr::relocate(spacing_col_0, .after = effect) %>%
+#   dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+#   dplyr::filter(ncov == 50) %>%
+#   dplyr::select(-ncov) %>%
+#   knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+#                col.names = c('\\(k\\)', '',
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+#                escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+#                caption= '<b>Table 8:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_2\\) in a setting with \\(50\\) covariates.<br> \\(\\)') %>%
+#   kableExtra::column_spec(2, width = '1cm') %>%
+#   kableExtra::column_spec(7, width = '1cm') %>%
+#   kable_classic(full_width = F) %>%
+#   column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+#   collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+#   kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+#   kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
 ```
 ]
 
@@ -1170,49 +1170,49 @@ subgroup_sep_metrics %>%
 
 ```{r apendix_performance_table_l2_p100, echo = FALSE, message=FALSE, out.width="50%", escape = FALSE, results='asis'}
 # html table
-subgroup_sep_metrics %>%
-  dplyr::filter(real_subgroup == 'neg') %>%
-  dplyr::select(-real_subgroup) %>%
-  pivot_longer(
-  cols = matches("_(mean|sd)$"),
-  names_to = c("metric", "stat"),
-  names_pattern = "^(.*)_(mean|sd)$",
-  values_to = "val"
-) %>%
-  pivot_wider(names_from = stat, values_from = val) %>%
-  mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
-  dplyr::select(-mean, -sd) %>%
-  pivot_wider(names_from = metric, values_from = cell) %>%
-  tidyr::pivot_wider(
-    id_cols = c(ncov, effect),
-    names_from = model,
-    values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
-    names_glue = "{model}.{.value}"
-  ) %>%
-  # sorting
-  dplyr::select(ncov, effect,
-                starts_with("bcf_iv"),
-                starts_with("sbcf_iv")) %>%
-  dplyr::mutate(
-    spacing_col_0 = " ",
-    spacing_col_1 = " ") %>% # empty columns for spacing
-  dplyr::relocate(spacing_col_0, .after = effect) %>%
-  dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
-  dplyr::filter(ncov == 100) %>%
-  dplyr::select(-ncov) %>%
-  knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
-               col.names = c('\\(k\\)', '',
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
-                             'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
-               escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
-               caption= '<b>Table 9:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_s\\) in a setting with \\(100\\) covariates.<br> \\(\\)') %>%
-  kableExtra::column_spec(2, width = '1cm') %>%
-  kableExtra::column_spec(7, width = '1cm') %>%
-  kable_classic(full_width = F) %>%
-  column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
-  collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
-  kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
-  kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
+# subgroup_sep_metrics %>%
+#   dplyr::filter(real_subgroup == 'neg') %>%
+#   dplyr::select(-real_subgroup) %>%
+#   pivot_longer(
+#   cols = matches("_(mean|sd)$"),
+#   names_to = c("metric", "stat"),
+#   names_pattern = "^(.*)_(mean|sd)$",
+#   values_to = "val"
+# ) %>%
+#   pivot_wider(names_from = stat, values_from = val) %>%
+#   mutate(cell = sprintf("%.3f (%.3f)", mean, sd)) %>%  # line break in cell
+#   dplyr::select(-mean, -sd) %>%
+#   pivot_wider(names_from = metric, values_from = cell) %>%
+#   tidyr::pivot_wider(
+#     id_cols = c(ncov, effect),
+#     names_from = model,
+#     values_from = c(PEHE_rm, bias_rm, abs_bias_rm, coverage),
+#     names_glue = "{model}.{.value}"
+#   ) %>%
+#   # sorting
+#   dplyr::select(ncov, effect,
+#                 starts_with("bcf_iv"),
+#                 starts_with("sbcf_iv")) %>%
+#   dplyr::mutate(
+#     spacing_col_0 = " ",
+#     spacing_col_1 = " ") %>% # empty columns for spacing
+#   dplyr::relocate(spacing_col_0, .after = effect) %>%
+#   dplyr::relocate(spacing_col_1, .after = bcf_iv.coverage) %>%
+#   dplyr::filter(ncov == 100) %>%
+#   dplyr::select(-ncov) %>%
+#   knitr::kable(booktabs = TRUE, linesep = "", digits = 4, format = 'html',
+#                col.names = c('\\(k\\)', '',
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage', "",
+#                              'MSE' ,'Bias', 'Abs. Bia', '95% Coverage'),
+#                escape = FALSE, align = 'lrrrrrrrrrr', # line_sep = FALSE,
+#                caption= '<b>Table 9:</b> Evaluation metrics of \\(\\widehat{\\tau}^{\\text{CACE}} (x)\\) for varying effect sizes \\(k\\) over \\(500\\) MCMC runs for subgroup \\(l_s\\) in a setting with \\(100\\) covariates.<br> \\(\\)') %>%
+#   kableExtra::column_spec(2, width = '1cm') %>%
+#   kableExtra::column_spec(7, width = '1cm') %>%
+#   kable_classic(full_width = F) %>%
+#   column_spec(8:11, background = c(rep('white', 2), rep('#90ee90', 9))) %>%
+#   collapse_rows(columns = 1, valign = "middle", latex_hline = 'major') %>%
+#   kable_styling(bootstrap_options = c('hover' ,'condensed'), font_size = 14) %>% # , ,  "striped"
+#   kableExtra::add_header_above(c('', '', "BCF-IV" = 4, '', "SBCF-IV" = 4))
 ```
 ]
 
@@ -1236,7 +1236,7 @@ subgroup_sep_metrics %>%
 <!--- ### Example of a single tree fit --->
 
 <!--- ```{r, echo=FALSE, out.width="80%", fig.align='center', eval = TRUE} --->
-<!--- knitr::include_graphics(here::here("06_presentation/032025_DCC_Aachen/graphics/figure_2.png")) --->
+# <!--- knitr::include_graphics(here::here("06_presentation/032025_DCC_Aachen/graphics/figure_2.png")) --->
 <!--- ``` --->
 ```
 
