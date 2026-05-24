@@ -1,8 +1,63 @@
 **/ude_thesis_files
 
+# ============================================================
+# LaTeX intermediate files (generated on every compile)
+# ============================================================
+
+# Core aux files
+*.aux          # cross-references, citation keys
+*.out          # hyperref PDF bookmarks
+
+# Table of contents / lists
+*.toc          # table of contents data
+*.lof          # list of figures data
+*.lot          # list of tables data
+
+# Bibliography (biblatex + biber)
+*.bbl          # processed bibliography
+*.bcf          # biber control file
+*.blg          # bibliography compiler log
+*.run.xml      # biber run metadata
+
+# Glossaries / acronyms (glossaries package)
+*.glg          # glossary compiler log
+*.glo          # raw glossary entries
+*.gls          # compiled glossary output
+*.acn          # raw acronym entries
+*.acr          # compiled acronym output
+*.alg          # acronym compiler log
+*.ist          # glossary makeindex style
+
+# Index
+*.idx          # raw index entries
+*.ilg          # index compiler log
+*.ind          # compiled index output
+
+# Editor sync
+*.synctex.gz   # SyncTeX forward/inverse search data
+*.synctex\(busy\)
+
+# latexmk build system
+*.fls          # file list (latexmk)
+*.fdb_latexmk  # latexmk dependency database
+
+# XeLaTeX intermediate
+*.xdv
+
+# Temp files from editors
+*.tmp.*
+*.tmp
+
+# ============================================================
+# Logs
+# ============================================================
 *.log
+
+# ============================================================
+# OS / IDE
+# ============================================================
 .DS_Store
-thesis.tex
 .Rhistory
 .Rproj.user
 .Rproj
+thesis.tex

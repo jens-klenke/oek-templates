@@ -1,0 +1,279 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{apa/apasortcite//global/global/global}
+    \entry{Keil_2012}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=a805575904e1477166956502aa6979e2}{%
+           family={Keil},
+           familyi={K\bibinitperiod},
+           given={Petr},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a148445362f144351343535079ec578c}{%
+           family={Belmaker},
+           familyi={B\bibinitperiod},
+           given={Jonathan},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d72e39d94bca84868903fce0b7d4bbe0}{%
+           family={Wilson},
+           familyi={W\bibinitperiod},
+           given={Adam\bibnamedelima M.},
+           giveni={A\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f0d77749d0a02d93bfbbbf17bb68a26d}{%
+           family={Unitt},
+           familyi={U\bibinitperiod},
+           given={Philip},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=20ac2735e7001c0b59816963e36a40ef}{%
+           family={Jetz},
+           familyi={J\bibinitperiod},
+           given={Walter},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=247de062554f2f4ee9832da40f7027b9}{%
+           family={Freckleton},
+           familyi={F\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley-Blackwell}%
+      }
+      \strng{namehash}{2e0a43563a64849f54a81119c4eddbe9}
+      \strng{fullhash}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{fullhashraw}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{bibnamehash}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{authorbibnamehash}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{authornamehash}{2e0a43563a64849f54a81119c4eddbe9}
+      \strng{authorfullhash}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{authorfullhashraw}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{editorbibnamehash}{247de062554f2f4ee9832da40f7027b9}
+      \strng{editornamehash}{247de062554f2f4ee9832da40f7027b9}
+      \strng{editorfullhash}{247de062554f2f4ee9832da40f7027b9}
+      \strng{editorfullhashraw}{247de062554f2f4ee9832da40f7027b9}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Methods Ecol Evol}
+      \field{month}{11}
+      \field{number}{1}
+      \field{title}{Downscaling of species distribution models: a hierarchical approach}
+      \field{volume}{4}
+      \field{year}{2012}
+      \field{pages}{82\bibrangedash 94}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1111/j.2041-210x.2012.00264.x
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1111/j.2041-210x.2012.00264.x
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1111/j.2041-210x.2012.00264.x
+      \endverb
+    \endentry
+    \entry{Litterman1986}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=9754c550f95d9cd5578e74d0a9834000}{%
+           family={Litterman},
+           familyi={L\bibinitperiod},
+           given={Robert\bibnamedelima B.},
+           giveni={R\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{fullhash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{fullhashraw}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{bibnamehash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{authorbibnamehash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{authornamehash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{authorfullhash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{authorfullhashraw}{9754c550f95d9cd5578e74d0a9834000}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{07350015}
+      \field{journaltitle}{Journal of Business {\&} Economic Statistics}
+      \field{month}{1}
+      \field{number}{1}
+      \field{title}{{Forecasting with Bayesian Vector Autoregressions: Five Years of Experience}}
+      \field{volume}{4}
+      \field{year}{1986}
+      \field{pages}{25}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.2307/1391384
+      \endverb
+      \verb{file}
+      \verb :Users/jonathan/Documents/Mendeley Desktop/Litterman - 1986 - Forecasting with Bayesian Vector Autoregressions Five Years of Experience.pdf:pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.jstor.org/stable/1391384?origin=crossref
+      \endverb
+      \verb{url}
+      \verb https://www.jstor.org/stable/1391384?origin=crossref
+      \endverb
+    \endentry
+  \enddatalist
+  \datalist[entry]{apa/global//global/global/global}
+    \entry{Keil_2012}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=a805575904e1477166956502aa6979e2}{%
+           family={Keil},
+           familyi={K\bibinitperiod},
+           given={Petr},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a148445362f144351343535079ec578c}{%
+           family={Belmaker},
+           familyi={B\bibinitperiod},
+           given={Jonathan},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d72e39d94bca84868903fce0b7d4bbe0}{%
+           family={Wilson},
+           familyi={W\bibinitperiod},
+           given={Adam\bibnamedelima M.},
+           giveni={A\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f0d77749d0a02d93bfbbbf17bb68a26d}{%
+           family={Unitt},
+           familyi={U\bibinitperiod},
+           given={Philip},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=20ac2735e7001c0b59816963e36a40ef}{%
+           family={Jetz},
+           familyi={J\bibinitperiod},
+           given={Walter},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=247de062554f2f4ee9832da40f7027b9}{%
+           family={Freckleton},
+           familyi={F\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley-Blackwell}%
+      }
+      \strng{namehash}{2e0a43563a64849f54a81119c4eddbe9}
+      \strng{fullhash}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{fullhashraw}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{bibnamehash}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{authorbibnamehash}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{authornamehash}{2e0a43563a64849f54a81119c4eddbe9}
+      \strng{authorfullhash}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{authorfullhashraw}{f624bd5bdb2678b9ba7c7e4cc2759aae}
+      \strng{editorbibnamehash}{247de062554f2f4ee9832da40f7027b9}
+      \strng{editornamehash}{247de062554f2f4ee9832da40f7027b9}
+      \strng{editorfullhash}{247de062554f2f4ee9832da40f7027b9}
+      \strng{editorfullhashraw}{247de062554f2f4ee9832da40f7027b9}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Methods Ecol Evol}
+      \field{month}{11}
+      \field{number}{1}
+      \field{title}{Downscaling of species distribution models: a hierarchical approach}
+      \field{volume}{4}
+      \field{year}{2012}
+      \field{pages}{82\bibrangedash 94}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1111/j.2041-210x.2012.00264.x
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1111/j.2041-210x.2012.00264.x
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1111/j.2041-210x.2012.00264.x
+      \endverb
+    \endentry
+    \entry{Litterman1986}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=9754c550f95d9cd5578e74d0a9834000}{%
+           family={Litterman},
+           familyi={L\bibinitperiod},
+           given={Robert\bibnamedelima B.},
+           giveni={R\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{fullhash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{fullhashraw}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{bibnamehash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{authorbibnamehash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{authornamehash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{authorfullhash}{9754c550f95d9cd5578e74d0a9834000}
+      \strng{authorfullhashraw}{9754c550f95d9cd5578e74d0a9834000}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{07350015}
+      \field{journaltitle}{Journal of Business {\&} Economic Statistics}
+      \field{month}{1}
+      \field{number}{1}
+      \field{title}{{Forecasting with Bayesian Vector Autoregressions: Five Years of Experience}}
+      \field{volume}{4}
+      \field{year}{1986}
+      \field{pages}{25}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.2307/1391384
+      \endverb
+      \verb{file}
+      \verb :Users/jonathan/Documents/Mendeley Desktop/Litterman - 1986 - Forecasting with Bayesian Vector Autoregressions Five Years of Experience.pdf:pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.jstor.org/stable/1391384?origin=crossref
+      \endverb
+      \verb{url}
+      \verb https://www.jstor.org/stable/1391384?origin=crossref
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

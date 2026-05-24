@@ -1,0 +1,286 @@
+% ============================================================
+% UDE THESIS PREAMBLE
+% University of Duisburg-Essen | Chair of Econometrics
+% ============================================================
+% Contains: document class, packages, layout, metadata, and
+%           acronym definitions.
+%
+% Included by ude_thesis.tex via: \input{ude_thesis_preamble}
+% Do NOT compile this file directly — compile ude_thesis.tex.
+% ============================================================
+
+\documentclass[11pt,a4paper]{article}
+
+
+% ============================================================
+% LANGUAGE — change this one value to switch the whole document
+% Options: english | german
+% ============================================================
+\newcommand{\thesislanguage}{english}  % <-- Set language here: english | german
+
+% Include statutory declaration page at end of document?
+% true  = declaration page printed (required for final submission)
+% false = declaration page omitted  (useful for drafts / seminar papers)
+\newcommand{\includestatutorydeclaration}{true}  % <-- true | false
+
+
+% ============================================================
+% FONTS & ENCODING
+% ============================================================
+
+\usepackage{lmodern}          % Latin Modern font (scalable)
+\usepackage{amssymb,amsmath}  % AMS math symbols and environments
+\usepackage{ifxetex,ifluatex} % Detect compiler (pdflatex vs xetex/luatex)
+\usepackage{fixltx2e}         % Provides \textsubscript (legacy fix)
+
+% Font encoding: T1 for pdflatex, fontspec for xetex/luatex
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0
+  % pdflatex path
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else
+  % xetex / luatex path
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+
+% Straight quotes in verbatim environments (if upquote.sty is available)
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+
+% ============================================================
+% PAGE GEOMETRY
+% ============================================================
+
+% Wide left margin (5 cm) for binding; standard margins elsewhere
+\usepackage[lmargin=5cm,rmargin=2.5cm,tmargin=2.5cm,bmargin=2.5cm]{geometry}
+
+
+% ============================================================
+% FIGURE PLACEMENT
+% ============================================================
+
+% Force all figures to appear at their exact position in the source [H]
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2]{
+    \expandafter\origfigure\expandafter[H]
+}{
+    \endorigfigure
+}
+
+
+% ============================================================
+% BIBLIOGRAPHY
+% ============================================================
+
+% APA citation style via biblatex + biber backend
+% maxbibnames=99 ensures all authors are listed in the reference list
+\usepackage{csquotes}
+\usepackage[backend=biber, maxbibnames=99, style=apa]{biblatex}
+\setlength\bibitemsep{1.5\itemsep}         % Extra spacing between reference entries
+\bibliography{Resources/references.bib}    % Path to the .bib file
+
+
+% ============================================================
+% CODE SYNTAX HIGHLIGHTING
+% ============================================================
+% Required for displaying formatted code blocks.
+% Safe to remove this entire section if your thesis contains no code.
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+% Token color definitions for syntax highlighting
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+
+% ============================================================
+% TABLES & GRAPHICS
+% ============================================================
+
+\usepackage{longtable,booktabs}  % Multi-page tables and publication-quality rules
+\usepackage{graphicx}
+
+% Auto-scale images so they never exceed the text area
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Passthrough wrapper used by figure includes; keeps natural image size
+\newcommand{\pandocbounded}[1]{#1}
+
+
+% ============================================================
+% HYPERLINKS & PDF METADATA
+% ============================================================
+
+% Update pdfauthor and pdftitle to match your thesis
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false,     % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{
+  breaklinks  = true,
+  bookmarks   = true,
+  pdfauthor   = {Name},   % <-- Your name
+  pdftitle    = {Title},  % <-- Your thesis title
+  colorlinks  = true,
+  citecolor   = blue,
+  urlcolor    = blue,
+  linkcolor   = black,
+  pdfborder   = {0 0 0}
+}
+\urlstyle{same}  % URLs use the same font as surrounding text
+
+
+% ============================================================
+% PARAGRAPH & SECTION FORMATTING
+% ============================================================
+
+\setlength{\parindent}{0pt}           % No paragraph indentation
+\setlength{\parskip}{6pt plus 2pt minus 1pt}  % Vertical space between paragraphs
+\setlength{\emergencystretch}{3em}    % Prevents overfull lines
+\setcounter{secnumdepth}{5}           % Number sections down to subsubparagraph level
+
+
+% ============================================================
+% TITLE PAGE COMMANDS
+% ============================================================
+
+\usepackage{titling}
+
+% \subtitle{} command — used on the title page
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+  }
+}
+
+% Title metadata — update these for your thesis
+\setlength{\droptitle}{-2em}
+  \title{Title}                          % <-- Thesis title
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+\subtitle{Subtitle}                      % <-- Thesis subtitle
+  \author{Name}                          % <-- Your name
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{today}                           % <-- Submission date
+
+
+% ============================================================
+% ACRONYMS / LIST OF ABBREVIATIONS
+% ============================================================
+
+% glossaries-package in acronym-only mode (no page numbers in list)
+\usepackage[acronym,nomain,nonumberlist]{glossaries}
+\usepackage{supertabular}
+\setacronymstyle{short-long}  % First use: SHORT (Long Form); later: SHORT
+\makenoidxglossaries
+
+% Styling: bold acronym names, no blank lines between groups
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}
+\renewcommand{\glsgroupskip}{}
+\setlength{\glsdescwidth}{0.8\linewidth}
+
+% Two-column table style: "Abbreviation | Definition" with header and rule
+\newglossarystyle{mysuper}{%
+  \setglossarystyle{super}
+  \renewcommand{\glossentry}[2]{%
+    \glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} &
+    \glossentrydesc{##1}\glspostdescription\space ##2\\[0.75ex]
+  }%
+  \renewcommand{\superheader}{\textbf{Abbreviation} & \textbf{Definition}\\\hline\endhead}%
+}
+
+% Acronym definitions — add your own with: \newacronym{label}{SHORT}{Long Form}
+\newacronym{itt}{ITT}{Intention-to-Treat}
+\newacronym{iv}{IV}{Instrumental Variables}
+\newacronym{sbcf}{SBCF}{Shrinkage Bayesian Causal Forest}
+\newacronym{sbcf-iv}{SBCF-IV}{Shrinkage Bayesian Instrumental Variable Causal Forest}
+
+
+% ============================================================
+% LINE SPACING
+% ============================================================
+
+\usepackage{setspace}
+\onehalfspacing   % 1.5 line spacing (standard requirement for academic work)
+
+
+% ============================================================
+% LANGUAGE — babel loaded based on \thesislanguage (set at top)
+% ============================================================
+% \IfLanguageName{english}{...}{...} in ude_thesis.tex body
+% automatically switches text once babel is loaded here.
+
+\usepackage{ifthen}
+\usepackage{iflang}
+\usepackage[super]{nth}  % Ordinal suffixes: 1st, 2nd, 3rd ...
+
+\ifthenelse{\equal{\thesislanguage}{german}}{
+  \usepackage[ngerman]{babel}
+}{
+  \usepackage[english]{babel}
+}
+
+
+% ============================================================
+% MICROTYPOGRAPHY
+% ============================================================
+
+% Improves text justification and glyph spacing where available
+\IfFileExists{microtype.sty}{%
+  \usepackage[nopatch=footnote]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath}  % Disable protrusion for tt fonts
+}{}
