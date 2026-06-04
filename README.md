@@ -1,5 +1,13 @@
 # RMarkdown Template for Thesis and Seminar Papers of the Econometric Chair
 
+## Structure
+
+This repository offers several templates developed by the Chair of Econometrics.
+
+The `Thesis` folder contains two subfolders. The first (`LaTeX Template`) provides a template that relies solely on LaTeX. The second (`RMarkdown Template`) contains an `Rmd` template built with R Markdown, which also requires a LaTeX distribution for rendering.
+
+Slide templates are available in the `Slides` folder, offering two options: the first is built with `Xaringan` and the second with `Quarto`.
+
 ## Purpose 
 
 ### UDE thesis 
