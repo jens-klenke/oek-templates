@@ -35,16 +35,8 @@ The UDE Quarto folder contains Quarto projects for generating:
 install.packages(c("tinytex", "rmarkdown", "knitr")) 
 tinytex::install_tinytex()
 ```
-- Alternative download MikTex from https://miktex.org/download
+- Install TeX Live from https://tug.org/texlive/
 
-- Other required R Packages
-```
-tinytex::tlmgr_install(c(
-  "biblatex", "biber", "babel-english", "caption", "graphicx", "float",
-  "geometry", "anyfontsize", "tocloft", "listings", "xcolor", "hyperref",
-  "fancyhdr", "titling", "sectsty", "etoolbox"
-))
-```
 
 - Install Quarto from (https://quarto.org/docs/get-started/), to check do the followng
 
@@ -65,23 +57,6 @@ install.packages("xaringan")
 ```
 
 ---
-
-## Project Snapshot
-``` 
-oek-templates
-
-     - oek-templates.Rproj (Project file)
-     - ude_quarto.qmd
-     - ude_thesis.rmd
-     - ude_xaringan.rmd
-     - _extensions (add ons for xaringan)
-     - Resources 
-           - references(thesis report)
-           - template(thesis report)
-           - quarto_slides(resources)
-           - xaringan_slides(resources)
-     - includes
-```
 
 ## Errors & Warnings
 - You can resolve your error\warnings by keeping the packages up-to-date. You can update them using ```install.packages("your_package_name")``` or you can update them manully using MikTex console.
